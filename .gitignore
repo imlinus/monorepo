@@ -1,0 +1,17 @@
+node_modules/
+dump/
+
+docs/
+apps/
+
+docker/index.yml
+
+libraries/component
+libraries/i18n
+libraries/date
+
+operating-system/
+
+tools/site-generator
+tools/folder-lint
+tools/css-bundler

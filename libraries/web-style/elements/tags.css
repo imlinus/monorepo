@@ -1,0 +1,58 @@
+.tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.tags .tag {
+  margin: 0 calc(var(--gap) / 2) var(--gap) 0;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.125rem 0.375rem;
+  font-size: 85%;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  color: var(--dark);
+  background: var(--default);
+}
+
+.tag.is-primary {
+  color: var(--white);
+  background: var(--primary);
+}
+
+.tag.is-secondary {
+  color: var(--white);
+  background: var(--secondary);
+}
+
+.tag.is-info {
+  color: var(--white);
+  background: var(--info);
+}
+
+.tag.is-success {
+  color: var(--white);
+  background: var(--success);
+}
+
+.tag.is-warning {
+  color: var(--white);
+  background: var(--warning);
+}
+
+.tag.is-danger {
+  color: var(--white);
+  background: var(--danger);
+}
+
+.tag.is-black {
+  color: var(--white);
+  background: var(--black);
+}
+
+.tag.is-white {
+  background: var(--white);
+}

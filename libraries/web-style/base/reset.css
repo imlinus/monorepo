@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+:root {
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+input:-webkit-autofill {
+  background-color: #FFF !important;
+  box-shadow: 0 0 0 1000px #FFF inset !important;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+}
+
+b,
+strong {
+  font-weight: 600;
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  font-size: 1rem;
+}
+
+small {
+  font-size: 87.5%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25rem;
+}
+
+sup {
+  top: -0.5rem;
+}
+
+[hidden] {
+  display: none;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+audio,
+video {
+  display: inline-block;
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+main {
+  display: block;
+}

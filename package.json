@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "@imlinus/workspaces",
+  "scripts": {
+    "start:docs": "docsify serve ./docs",
+    "test": "",
+    "preinstall": "npx only-allow pnpm",
+    "lint:folders": "folder-lint",
+    "remove:node-modules": "npx rimraf ./**/node_modules",
+    "remove:dist": "npx rimraf ./**/dist"
+  },
+  "devDependencies": {
+    "@imlinus/git-hooks": "*",
+    "@imlinus/folder-lint": "*"
+  },
+  "hooks": {
+    "pre-commit": "npm run lint"
+  }
+}

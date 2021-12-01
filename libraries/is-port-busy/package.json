@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "name": "@imlinus/is-port-busy",
+  "version": "0.1.0",
+  "main": "index.js"
+}

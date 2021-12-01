@@ -1,0 +1,28 @@
+code {
+  background: var(--dark);
+  border-radius: 0.25rem;
+  margin-top: var(--gap);
+  padding: calc(var(--gap) / 2);
+  border: 1px solid var(--dark-accent);
+  color: var(--white);
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 2;
+  tab-size: 2;
+  hyphens: none;
+  font-size: 90%;
+  overflow-x: auto;
+  margin: 0;
+}
+
+pre {
+  display: inline-block;
+  background: var(--dark);
+  border: 1px solid var(--dark-accent);
+  color: var(--white);
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}

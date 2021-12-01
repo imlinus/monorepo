@@ -1,0 +1,12 @@
+{
+  "rules": [
+    "node_modules/**",
+    "apps/**",
+    "docs/**",
+    "fonts/**",
+    "libraries/**",
+    "operating-system/**",
+    "tools/**",
+    "webapps/**"
+  ]
+}

@@ -1,0 +1,52 @@
+.menu {
+  padding: 1.25rem;
+}
+
+.menu-list {
+  line-height: 1.25;
+}
+
+.menu-list a {
+  border-radius: 0.625rem;
+  color: #333;
+  display: block;
+  padding: 0.5em 0.75em;
+}
+
+.menu-list a:hover {
+  background-color: #EAEFF3;
+  color: #222;
+}
+
+.menu-list a.is-active {
+  background-color: #3ECF8E;
+  color: #FFF;
+}
+
+.menu-list li {
+  cursor: pointer;
+  list-style-type: none;
+  margin: 0;
+}
+
+.menu-list li ul {
+  border-left: 2px solid #b9cad7;
+  margin: 0.75em;
+  padding-left: 0.75em;
+}
+
+.menu-label {
+  color: var(--black);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.menu-label:not(:first-child) {
+  margin-top: 1rem;
+}
+
+.menu-label:not(:last-child) {
+  margin-bottom: 1rem;
+}

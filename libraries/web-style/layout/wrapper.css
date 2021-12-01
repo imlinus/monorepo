@@ -1,0 +1,17 @@
+.wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  display: block;
+}
+
+.has-fixed-topbar .wrapper {
+  padding-top: var(--topbar-height);
+}
+
+.has-left-sidebar .wrapper {
+  padding-left: 17.5rem;
+}
+
+.has-right-sidebar .wrapper {
+  padding-right: 17.5rem;
+}

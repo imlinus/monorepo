@@ -1,0 +1,14 @@
+ul,
+ol {
+  margin-top: 0;
+  margin: 0 0 1.5rem 1.5rem;
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+  margin-left: 2.5rem;
+}

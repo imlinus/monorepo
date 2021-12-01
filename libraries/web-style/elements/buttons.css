@@ -1,0 +1,106 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.buttons.is-centered {
+  justify-content: center;
+}
+
+.buttons button {
+  margin: 0 calc(var(--gap) / 2) calc(var(--gap) / 2) 0;
+}
+
+.buttons button:last-of-type {
+  margin-right: 0;
+}
+
+button {
+  margin-bottom: calc(var(--gap) / 2);
+  padding: calc(var(--gap) / 3) calc(var(--gap) / 2);
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: var(--base-size);
+  font-weight: 500;
+  background: transparent;
+  border: 0.0625rem solid var(--default);
+  border-radius: 0.25rem;
+  color: var(--main-color);
+  white-space: nowrap;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button.is-primary {
+  color: white;
+  background: var(--primary);
+  border-color: var(--primary-accent);
+}
+
+button.is-primary:hover {
+  background: var(--primary-accent);
+}
+
+button.is-secondary {
+  color: white;
+  background: var(--secondary);
+  border-color: var(--secondary-accent);
+}
+
+button.is-secondary:hover {
+  background: var(--secondary-accent);
+}
+
+button.is-secondary {
+  color: white;
+  background: var(--secondary);
+  border-color: var(--secondary-accent);
+}
+
+button.is-secondary:hover {
+  background: var(--secondary-accent);
+}
+
+button.is-success {
+  color: white;
+  background: var(--success);
+  border-color: var(--success-accent);
+}
+
+button.is-success:hover {
+  background: var(--success-accent);
+}
+
+button.is-warning {
+  color: white;
+  background: var(--warning);
+  border-color: var(--warning-accent);
+}
+
+button.is-warning:hover {
+  background: var(--warning-accent);
+}
+
+button.is-danger {
+  color: white;
+  background: var(--danger);
+  border-color: var(--danger-accent);
+}
+
+button.is-danger:hover {
+  background: var(--danger-accent);
+}
+
+button.is-dark {
+  color: white;
+  background: var(--dark);
+  border-color: var(--dark-accent);
+}
+
+button.is-dark:hover {
+  background: var(--dark-accent);
+}

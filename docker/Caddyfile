@@ -1,0 +1,56 @@
+# -----------
+# Third-party
+# -----------
+portainer.imlinus.com {
+  reverse_proxy localhost:9000
+}
+
+code.imlinus.com {
+  reverse_proxy localhost:8765
+}
+
+docs.imlinus.com {
+  reverse_proxy localhost:9000
+}
+
+irc.imlinus.com {
+  reverse_proxy localhost:9000
+}
+
+play.imlinus.com {
+  reverse_proxy 85.24.178.218:8096
+}
+
+# -------
+# Webapps
+# -------
+authenticator.imlinus.com {
+  reverse_proxy localhost:2001
+}
+
+dashboard.imlinus.com {
+  reverse_proxy localhost:2002
+}
+
+notes.imlinus.com {
+  reverse_proxy localhost:2003
+}
+
+personal.imlinus.com {
+  reverse_proxy localhost:2004
+}
+
+thrownote.imlinus.com {
+  reverse_proxy localhost:2005
+}
+
+# -----
+# Games
+# -----
+csgo.imlinus.com {
+  reverse_proxy localhost:27015
+}
+
+minecraft.imlinus.com {
+  reverse_proxy localhost:25565
+}

@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "@imlinus/authenticator",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview --port 2030"
+  }
+}

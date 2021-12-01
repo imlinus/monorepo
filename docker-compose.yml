@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  thrownote:
+    container_name: thrownote
+    build:
+      context: . # ./webapps/thrownote
+      dockerfile: Dockerfile.node
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./webapps/thrownote:/app
+
+  # thrownote:
+  #   container_name: thrownote
+  #   build: ./webapps/thrownote/
+  #   # command: npm start
+  #   ports:
+  #     - '1337:1337'
+  #   volumes:
+  #     - ./webapps/thrownote:/app

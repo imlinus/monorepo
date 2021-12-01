@@ -1,0 +1,13 @@
+FROM node:alpine
+
+RUN npm install -g pnpm
+WORKDIR /app
+
+COPY ./pnpm-lock.yaml ./
+RUN pnpm fetch --prod
+
+ADD . ./
+RUN pnpm install -r --offline --prod
+
+# EXPOSE 1337
+CMD ["node", "server.js"]

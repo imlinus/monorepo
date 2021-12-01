@@ -1,0 +1,11 @@
+input [type="text"] {
+  outline: 1px solid red;
+}
+
+button {
+  background: red;
+
+  &.is-active {
+    background: green;
+  }
+}

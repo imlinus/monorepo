@@ -2,12 +2,14 @@
   "private": true,
   "name": "@imlinus/workspaces",
   "scripts": {
-    "start:docs": "docsify serve ./docs",
     "test": "",
     "preinstall": "npx only-allow pnpm",
+    "lint": "node ./lint-all.js",
     "lint:folders": "folder-lint",
     "remove:node-modules": "npx rimraf ./**/node_modules",
-    "remove:dist": "npx rimraf ./**/dist"
+    "remove:dist": "npx rimraf ./**/dist",
+    "serve:cheatsheets": "docsify serve ./webapps/cheat-sheets",
+    "serve:docs": "docsify serve ./docs"
   },
   "devDependencies": {
     "@imlinus/git-hooks": "*",

@@ -3,7 +3,7 @@ I needed some colors in my logs
 
 #### Use
 ```js
-import color from '@lily-os/color'
+import color from '@imlinus/color'
 
 console.log(color.blue('Hello, World.'))
 

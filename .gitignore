@@ -1,14 +1,21 @@
+.env
+
 node_modules/
 dump/
 
 docs/
-apps/
+
+apps/browser
+apps/calculator
+apps/image-viewer
+apps/terminal
 
 docker/index.yml
 
 libraries/component
 libraries/i18n
 libraries/date
+libraries/lua-utils
 
 operating-system/
 

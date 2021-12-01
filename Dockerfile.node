@@ -1,13 +1,22 @@
-FROM node:alpine
+ARG WEBAPP
 
+# Setup build environment
+# And build our packages
+FROM node:alpine AS buildenv
+
+WORKDIR /monorepo
+
+COPY . .
+
+# Install toolchain
 RUN npm install -g pnpm
-WORKDIR /app
-
-COPY ./pnpm-lock.yaml ./
 RUN pnpm fetch --prod
-
-ADD . ./
 RUN pnpm install -r --offline --prod
+
+# Create our webapp image
+FROM node
+WORKDIR /app
+COPY --from=buildenv /monorepo/webapps/$WEBAPP /app
 
 # EXPOSE 1337
 CMD ["node", "server.js"]

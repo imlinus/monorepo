@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 
 services:
   thrownote:
@@ -6,6 +6,8 @@ services:
     build:
       context: . # ./webapps/thrownote
       dockerfile: Dockerfile.node
+      args:
+        webapp: thrownote
     ports:
       - "1337:1337"
     volumes:
@@ -19,3 +21,12 @@ services:
   #     - '1337:1337'
   #   volumes:
   #     - ./webapps/thrownote:/app
+
+  # kavita:
+  #   image: kizaing/kavita:latest
+  #   volumes:
+  #     - ./books:/books
+  #     - ./data:/kavita/config
+  #   ports:
+  #     - "5000:5000"
+  #   restart: unless-stopped

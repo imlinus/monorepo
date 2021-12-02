@@ -10,7 +10,8 @@ RUN pnpm fetch --prod
 FROM base AS dev
 RUN pnpm fetch
 COPY . ./
-RUN pnpm install --offline --frozen-lockfile --unsafe-perm
+RUN pnpm install --offline
+# --frozen-lockfile --unsafe-perm
 
 ## This is ugly, but I'm having insane problems with symlinked crap
 ## And yeah.. I don't wanna spend another week on f*ckin docker

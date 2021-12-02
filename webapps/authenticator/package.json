@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "@imlinus/authenticator",
+  "type": "module",
   "scripts": {
     "start": "node server.js"
   },

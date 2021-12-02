@@ -10,6 +10,6 @@ const __dirname = (() => {
 
 server({
   src: __dirname, // path.join(__dirname, '/dist'),
-  port: 1337,
+  port: 1305,
   main: 'index.html'
 })

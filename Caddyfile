@@ -1,47 +1,59 @@
 # -----------
-# Third-party
+# Services (Third-party)
 # -----------
-portainer.imlinus.com {
-  reverse_proxy localhost:9000
+abstruse.imlinus.com {
+  reverse_proxy localhost:1200
 }
 
 code.imlinus.com {
-  reverse_proxy localhost:8765
+  reverse_proxy localhost:1201
 }
 
 docs.imlinus.com {
-  reverse_proxy localhost:9000
+  reverse_proxy localhost:1202
 }
 
 irc.imlinus.com {
-  reverse_proxy localhost:9000
+  reverse_proxy localhost:1203
 }
 
 play.imlinus.com {
   reverse_proxy 85.24.178.218:8096
 }
 
+portainer.imlinus.com {
+  reverse_proxy localhost:1204
+}
+
 # -------
 # Webapps
 # -------
 authenticator.imlinus.com {
-  reverse_proxy localhost:2001
+  reverse_proxy localhost:1300
+}
+
+cheatsheets.imlinus.com {
+  reverse_proxy localhost:1301
 }
 
 dashboard.imlinus.com {
-  reverse_proxy localhost:2002
+  reverse_proxy localhost:1302
+}
+
+fonts.imlinus.com {
+  reverse_proxy localhost:1303
 }
 
 notes.imlinus.com {
-  reverse_proxy localhost:2003
+  reverse_proxy localhost:1304
 }
 
 personal.imlinus.com {
-  reverse_proxy localhost:2004
+  reverse_proxy localhost:1305
 }
 
 thrownote.imlinus.com {
-  reverse_proxy localhost:2005
+  reverse_proxy localhost:1306
 }
 
 # -----

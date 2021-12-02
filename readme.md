@@ -1,10 +1,9 @@
-Welcome to the monorepo of all my development stuff
+Welcome to the monorepo of all my dev stuff
 
-This includes all my libraries, tools, apps, webapps and my operating system :P
+Right now I've got kind of a retarded docker setup, but it'll do for now
 
-Login (and keep session alive)
 
-First install?
+Dev, first install?
 ```sh
 npm i -g pnpm
 pnpm i -g docsify
@@ -15,6 +14,16 @@ Useful commands
 ```sh
 ssh -o ServerAliveInterval=60 root@103.143.76.14
 
+# Servers
 Edward: 194.35.12.180
 Anthon: 103.143.76.14
+
+# Docker
+docker run -it --entrypoint '/bin/sh' ubuntu
+
+docker exec -it image:name sh
+
+docker run -it --rm image:tag sh
+
+docker ps --format '{{ json .}}'
 ```

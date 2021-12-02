@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  irc:
+    container_name: irc
+    image: thelounge/thelounge:latest
+    ports:
+      - '1250:9000'
+    restart: always
+    volumes:
+      - ~/.thelounge:/var/opt/thelounge

@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: abstruse-demo-mysql
+    restart: unless-stopped
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - MYSQL_ROOT_PASSWORD=demotest
+    volumes:
+      - "./testdata/mysql:/var/lib/mysql"
+    networks:
+      demo_net:
+        ipv4_address: 10.20.20.10
+
+  abstruse-server:
+    image: abstruse/abstruse-server:latest
+    container_name: abstruse-demo-server
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    ports:
+      - "80:80"
+    environment:
+      - ABSTRUSE_HTTP_COMPRESS=true
+      - ABSTRUSE_DB_HOST=10.20.20.10
+      - ABSTRUSE_DB_PORT=3306
+      - ABSTRUSE_DB_USER=root
+      - ABSTRUSE_DB_PASSWORD=demotest
+      - ABSTRUSE_DB_NAME=abstruse_demo
+      - ABSTRUSE_AUTH_JWTSECRET=fa27ef3ef6570e32a79e74deca7c1bc3
+    volumes:
+      - "./testdata/abstruse-server:/abstruse"
+    command:
+      - "--config=/abstruse/abstruse-server.json"
+      - "--logger-level=debug"
+    networks:
+      demo_net:
+        ipv4_address: 10.20.20.20
+
+  abstruse-worker:
+    image: abstruse/abstruse-worker:latest
+    container_name: abstruse-demo-worker
+    restart: unless-stopped
+    depends_on:
+      - abstruse-server
+    environment:
+      - ABSTRUSE_GRPC_ADDR=0.0.0.0:3330
+      - ABSTRUSE_SERVER_ADDR=http://10.20.20.20:80
+      - ABSTRUSE_SCHEDULER_MAXPARALLEL=2
+      - ABSTRUSE_AUTH_JWTSECRET=fa27ef3ef6570e32a79e74deca7c1bc3
+    volumes:
+      - "./testdata/abstruse-worker:/abstruse"
+      - "/tmp:/tmp"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    command:
+      - "--config=/abstruse/abstruse-worker.json"
+      - "--logger-level=debug"
+    networks:
+      demo_net:
+        ipv4_address: 10.20.20.30
+
+networks:
+  demo_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.20.20.0/16

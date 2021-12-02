@@ -12,10 +12,12 @@ RUN pnpm fetch
 COPY . ./
 RUN pnpm install --offline --frozen-lockfile --unsafe-perm
 
-# FROM dev
-# WORKDIR /root/app
-# COPY --from=dev /root/monorepo/webapps/thrownote ./
-
 ## This is ugly, but I'm having insane problems with symlinked crap
 ## And yeah.. I don't wanna spend another week on f*ckin docker
 WORKDIR /root/monorepo/webapps/thrownote
+
+
+
+# FROM dev
+# WORKDIR /root/app
+# COPY --from=dev /root/monorepo/webapps/thrownote ./

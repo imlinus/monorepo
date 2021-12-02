@@ -10,12 +10,11 @@ services:
       - 1337:1337
     command: pnpm start
 
-
-  # kavita:
-  #   image: kizaing/kavita:latest
-  #   volumes:
-  #     - ./books:/books
-  #     - ./data:/kavita/config
-  #   ports:
-  #     - "5000:5000"
-  #   restart: unless-stopped
+  authenticator:
+    build:
+      context: ./
+      dockerfile: ./webapps/authenticator/Dockerfile
+    restart: unless-stopped
+    ports:
+      - 1338:1338
+    command: pnpm start

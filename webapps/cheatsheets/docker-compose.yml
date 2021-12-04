@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  cheatsheets:
+    build:
+      context: ./
+    restart: unless-stopped
+    ports:
+      - 1301:1301
+    command: pnpm start

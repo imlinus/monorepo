@@ -1,7 +1,7 @@
 # -----------
 # Services (Third-party)
 # -----------
-abstruse.imlinus.com {
+ci.imlinus.com {
   reverse_proxy localhost:1200
 }
 
@@ -13,16 +13,12 @@ docs.imlinus.com {
   reverse_proxy localhost:1202
 }
 
-irc.imlinus.com {
-  reverse_proxy localhost:1203
-}
-
 play.imlinus.com {
   reverse_proxy 85.24.178.218:8096
 }
 
 portainer.imlinus.com {
-  reverse_proxy localhost:1204
+  reverse_proxy localhost:1203
 }
 
 # -------
@@ -61,8 +57,4 @@ thrownote.imlinus.com {
 # -----
 csgo.imlinus.com {
   reverse_proxy localhost:27015
-}
-
-minecraft.imlinus.com {
-  reverse_proxy localhost:25565
 }

@@ -4,7 +4,6 @@
   "scripts": {
     "test": "",
     "preinstall": "npx only-allow pnpm",
-    "lint": "node ./lint-all.js",
     "lint:folders": "folder-lint",
     "remove:node-modules": "npx rimraf ./**/node_modules",
     "remove:dist": "npx rimraf ./**/dist",
@@ -15,6 +14,6 @@
     "@imlinus/git-hooks": "*"
   },
   "hooks": {
-    "pre-commit": "npm run lint"
+    "pre-commit": ""
   }
 }

@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  authenticator:
+    build:
+      context: ./
+    restart: unless-stopped
+    ports:
+      - 1300:1300
+    command: pnpm start

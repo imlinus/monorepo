@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  csgo:
+    image: cm2network/csgo
+    ports:
+      - '${CSGO_PORT}:${CSGO_PORT}'
+    environment:
+      - SRCDS_RCONPW="${CSGO_ADMIN_PASSWORD}"
+      - SRCDS_PW="${CSGO_PASSWORD}"
+      - SRCDS_PORT=${CSGO_PORT}
+      - SRCDS_TV_PORT=27020
+      - SRCDS_NET_PUBLIC_ADDRESS="0"
+      - SRCDS_IP="0"
+      - SRCDS_FPSMAX=300
+      - SRCDS_TICKRATE=128
+      - SRCDS_MAXPLAYERS=14
+      - SRCDS_STARTMAP="de_dust2"
+      - SRCDS_REGION=3
+      - SRCDS_MAPGROUP="mg_active"
+      - SRCDS_GAMETYPE=0
+      - SRCDS_GAMEMODE=1
+      - SRCDS_HOSTNAME="${CSGO_HOSTNAME}"
+      - ADDITIONAL_ARGS=""

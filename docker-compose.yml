@@ -1,5 +1,7 @@
 version: '3'
 
+# When I'm on a windows computer and need a quick environment
+
 services:
   ubuntu:
     image: ubuntu:rolling

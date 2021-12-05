@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  docs:
+    container_name: docs
+    image: etherpad/etherpad
+    ports:
+      - '1202:9001'
+

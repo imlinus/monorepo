@@ -6,5 +6,5 @@ services:
     build: .
     stdin_open: true
     tty: true
-    volumes:
-      - ../:/docker
+    # volumes:
+    #  - ./:/docker

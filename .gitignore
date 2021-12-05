@@ -5,7 +5,7 @@ dump/
 
 docs/
 
-apps/browser
+apps/browser-lua
 apps/calculator
 apps/image-viewer
 apps/terminal
@@ -17,7 +17,7 @@ libraries/i18n
 libraries/date
 libraries/lua-utils
 
-operating-system/
+# operating-system/
 
 tools/site-generator
 tools/folder-lint

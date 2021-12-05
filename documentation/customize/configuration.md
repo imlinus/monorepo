@@ -1,0 +1,3 @@
+# Configuration
+
+Lorem ipsum

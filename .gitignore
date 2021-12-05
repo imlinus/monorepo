@@ -15,8 +15,11 @@ libraries/i18n
 libraries/date
 libraries/lua-utils
 
-# operating-system/
+operating-system/downloads
+operating-system/nroot
 
 tools/site-generator
 tools/folder-lint
 tools/css-bundler
+
+webapps/personal/history

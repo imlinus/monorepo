@@ -1,3 +1,9 @@
+First, we've gotta setup our toolchain. Or the cross-compiler as it's sometimes called
+
+This is then what will build our distro for us
+
+
+Useful commands:
 ```bash
 docker-compose up --build
 docker exec -it <image:name> sh

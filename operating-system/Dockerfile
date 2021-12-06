@@ -12,5 +12,5 @@ zsh pv nano lzip texinfo sed gzip qemu qemu-system-x86
 COPY . /docker
 WORKDIR /docker
 
-RUN chmod +x ./build-iso.sh
-RUN ./build-iso.sh build
+# RUN chmod +x ./build-iso.sh
+# RUN ./build-iso.sh build

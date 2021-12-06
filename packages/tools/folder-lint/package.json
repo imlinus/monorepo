@@ -1,0 +1,13 @@
+{
+  "name": "@imlinus/folder-lint",
+  "version": "0.1.0",
+  "main": "index.js",
+  "bin": {
+    "folder-lint": "index.js"
+  },
+  "dependencies": {
+    "@imlinus/color": "*",
+    "glob": "^7.1.6",
+    "minimist": "^1.2.0"
+  }
+}

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=browser
+Type=Application
+Comment=Browser is a simple web browser built in lua
+Icon=web-browser
+Exec=browser
+Terminal=false
+Categories=Network;WebBrowser;

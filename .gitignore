@@ -4,23 +4,4 @@ node_modules/
 dump/
 history/
 
-packages/apps/browser-lua
-packages/apps/calculator
-packages/apps/image-viewer
-packages/apps/terminal
-
-docker/index.yml
-
-packages/libraries/component
-packages/libraries/i18n
-packages/libraries/date
-packages/libraries/lua-utils
-
-packages/operating-system/downloads
-packages/operating-system/nroot
-
-packages/tools/site-generator
-packages/tools/folder-lint
-packages/tools/css-bundler
-
 webapps/personal/history

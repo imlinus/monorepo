@@ -2,6 +2,7 @@
 
 node_modules/
 dump/
+history/
 
 packages/apps/browser-lua
 packages/apps/calculator

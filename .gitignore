@@ -22,4 +22,4 @@ packages/tools/site-generator
 packages/tools/folder-lint
 packages/tools/css-bundler
 
-packages/webapps/personal/history
+webapps/personal/history

@@ -1,0 +1,10 @@
+#rutan {
+	font-size: 11px;
+	color:#000000;
+	margin-left:35px;
+	font-family:Verdana;
+}
+
+
+a       { color: #000000; text-decoration: none; }
+a:hover { color: #C3C4CE; text-decoration: none; }

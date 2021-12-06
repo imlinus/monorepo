@@ -3,23 +3,23 @@
 node_modules/
 dump/
 
-apps/browser-lua
-apps/calculator
-apps/image-viewer
-apps/terminal
+packages/apps/browser-lua
+packages/apps/calculator
+packages/apps/image-viewer
+packages/apps/terminal
 
 docker/index.yml
 
-libraries/component
-libraries/i18n
-libraries/date
-libraries/lua-utils
+packages/libraries/component
+packages/libraries/i18n
+packages/libraries/date
+packages/libraries/lua-utils
 
-operating-system/downloads
-operating-system/nroot
+packages/operating-system/downloads
+packages/operating-system/nroot
 
-tools/site-generator
-tools/folder-lint
-tools/css-bundler
+packages/tools/site-generator
+packages/tools/folder-lint
+packages/tools/css-bundler
 
-webapps/personal/history
+packages/webapps/personal/history

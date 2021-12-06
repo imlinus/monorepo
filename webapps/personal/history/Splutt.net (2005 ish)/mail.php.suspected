@@ -1,0 +1,44 @@
+<?php
+
+$till = $_POST['till'];
+$text = $_POST['text'];
+$times = $_POST['times'];
+
+if (($till != "erik_gm93@hotmail.com") || ($till != "dif_92@hotmail.com"))
+{
+
+echo "Skickar mail, vänligen vänta...";
+echo '<script> setTimeout("history.go(-1)",10000); </script>';
+
+
+if ($times > 20)
+{
+echo "Max är 20 stycken, det skickas nu 20 mail.";
+$times = 20;
+}
+
+$nrett = "Detta mail är skickat från en hemsida. Denna kommer inte från 'avsändaren' utan från en person som är som inte vill avslöja identitet. Personen har själv valt antalet mail. Detta är inte spam, eftersom det inte innehåller någon reklam. Det kan däremot betraktas som skräppost. Detta mail innehåller inget farligt, utan bara text.
+
+
+Personens meddelande:
+";
+
+
+
+
+for ($i = 0; $i < $times; $i++)
+{
+mail($till, "Mail", $nrett . $text);
+
+
+}
+
+}
+else
+{
+echo "<h2><b>ERROR:</b></h2><br>Det går inte att spama admin!"; 
+echo '<script> setTimeout("history.go(-1)",1700); </script>';
+
+}
+
+?>

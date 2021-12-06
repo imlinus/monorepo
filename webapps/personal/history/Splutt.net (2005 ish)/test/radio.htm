@@ -1,0 +1,1559 @@
+
+
+
+
+
+
+
+
+<HTML>
+<HEAD>
+<TITLE>Radio</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="radio.css" type="text/css">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+  if(document.all && !document.getElementById) {
+    document.getElementById = function(id) {
+      return document.all[id];
+    }
+  }
+
+  var showingVideo = false;
+//-->
+</SCRIPT>
+
+<SCRIPT FOR="player" LANGUAGE="JavaScript">
+	var lastClipTitle = "";
+
+  function getLastClipTitle() {
+    return lastClipTitle;
+  }
+  
+  function setLastClipTitle(title) {
+    lastClipTitle = title;
+  }
+</SCRIPT>
+
+
+
+<SCRIPT FOR="player" EVENT="ScriptCommand(sType, sParam)" LANGUAGE="JavaScript">
+	//alert("Fungerar");
+	ScriptCommandReceived(sType, sParam); 
+  //window.setTimeout('ScriptCommandReceived('+sType+', '+sParam+');', 1);
+</SCRIPT>
+
+<SCRIPT FOR="player" EVENT="Buffering(bStart)" LANGUAGE="JavaScript">
+  window.setTimeout('bufferStateChanged('+bStart+');', 1);
+</SCRIPT>
+
+
+<SCRIPT FOR="player" EVENT="OpenStateChange(lOldState, lNewState)" LANGUAGE="JavaScript">
+
+  window.setTimeout('openStateChanged('+lNewState+');', 1);
+</SCRIPT>
+
+
+<SCRIPT FOR="player" EVENT="PlayStateChange(lOldState, lNewState)" LANGUAGE="JScript">
+
+  window.setTimeout('playStateChanged('+lNewState+');', 1);
+</SCRIPT>
+
+
+
+<SCRIPT LANGUAGE="JavaScript">
+
+  var fHasWMP = false;
+  var WMPVer = "unknown";
+  var fHasWMP64 = false;
+  var fHasWMP7 = false;
+
+  
+  var plugins = null;
+  var currentPlugin = null;
+
+  function addPlugin(key, url, scroll) {
+    if (plugins == null) {
+      plugins = new Array();
+    }
+    plugins[key] = new pluginObject(key, url);
+  }
+
+  function pluginObject(key, url) {
+    this.key = key;
+    this.url = url;
+    this.loaded = false;
+
+    this.frameObj = document.getElementById( "pluginFrameID" + key );
+    this.frame = eval("frames.pluginFrame" + key);
+    this.layer = document.getElementById( "pluginLayer" + key );
+    this.tab = document.getElementById( "tabTitle" + key );
+
+    this.load = load;
+    this.navigate = navigate;
+    this.show = show;
+    this.hide = hide;
+    this.isLoaded = isLoaded;
+
+    function load() {
+      this.frameObj.src = this.url;
+      this.loaded = true;
+    }
+
+    function navigate(url) {
+      this.loaded = false;
+      this.url = url;
+    }
+
+    function show() {
+      if (!this.loaded) {
+        this.load();
+      }
+      if (this.tab != undefined) this.tab.className = "tabSelected";
+      swapImage("tabBG" + key, "tabsel");
+      this.layer.style.visibility = "visible";
+      
+      // ### Special-lösning för ondemand (visa/gömma video)
+      if (key == "onair" && showingVideo && !showingAd && isPlaying()) {
+        showLayer("playerLayer");
+      }
+    }
+
+    function hide() {
+      if (this.tab != undefined) this.tab.className = "tab";
+      swapImage("tabBG" + key, "tab");
+      this.layer.style.visibility = "hidden";
+      
+      // ### Special-lösning för ondemand (visa/gömma video)
+      if (key == "onair" && showingVideo && (!isPlaying() || !showingAd)) {
+        hideLayer("playerLayer");
+      }
+    }
+
+    function isLoaded() {
+      var found = false;
+      if (this.frame.loaded != undefined) {
+        found = (this.frame.loaded == true);
+      }
+      return found;
+    }
+  }
+
+  function hidePlugins() {
+    for (var i = 0; i < plugins.length; i++) {
+      plugins[i].hide();
+    }
+  }
+
+  function hideCurrentPlugin() {
+    if (currentPlugin != null) {
+      currentPlugin.hide();
+    }
+  }
+
+  function showPlugin(key) {
+    hideCurrentPlugin();
+    currentPlugin = plugins[key];
+    currentPlugin.show();
+  }
+
+  function navigatePlugin(key, url) {
+    hideCurrentPlugin();
+    currentPlugin = plugins[key];
+    var oldUrl = currentPlugin.url;
+    currentPlugin.navigate(url);
+    currentPlugin.show();
+    currentPlugin.navigate(oldUrl);
+  }
+
+
+
+  
+  var bufferID = 0;
+
+
+  var mpStopped = 0;
+  var mpPaused = 1;
+  var mpPlaying = 2;
+  var mpWaiting = 3;
+  var mpScanForward = 4;
+  var mpScanReverse = 5;
+  var mpClosed = 6;
+  var mpMediaEnded = 9999; // does not exist in WMP6
+
+
+  var mpPlaylistLocating = 2;
+  var mpPlaylistConnecting = 3;
+  var mpPlaylistLoading = 4;
+  var mpPlaylistOpening = 5;
+
+  var playerObj = null;
+  var NCL = "";
+  var videoAd = false;
+  var showingAd = false;
+  var introAdDone = false;
+  var ondemand = false;
+  var lastEntry = -1;
+  var toggleAdId = -1;
+
+  var cmdPLAYLIST = 1;
+
+  var stoppedInPlay = false;
+
+
+
+  function ScriptCommandReceived(sType, sParam) {
+    if ((sType == "CAPTION" || sType == "TEXT") && sParam.length > 1) {
+      //debug("ScriptCommandReceived(" + sType + ", " + sParam + ")");
+      var cmd = parseInt(sParam.substring(0, 1));
+      var data = sParam.substring(1);	  
+
+      switch (cmd) {
+        case cmdPLAYLIST:
+	  //Byter ut %$ mot £$ så att NCLen funkar för jukeboxarna
+
+			debug("Originaldata(" + data + ")");
+			/*alert("Ordigianl "+data);
+			data = String(data);
+			data = data.replace(/%$/gi, "£$");
+			alert("Converted "+data);
+			*/
+			debug("Converted(length=1)(" + data + ")");
+
+          var items = data.split("|");
+
+          if (plugins["onair"].isLoaded()) {
+            plugins["onair"].frame.clearPlaylist();
+          }
+
+          for (i = 0; i < items.length; i++) {
+            var itemData = items[i].split("£$");
+            if (itemData.length == 1) {
+				itemData = items[i].split("%$");
+            }
+			if (itemData.length >= 3) {
+              if (plugins["onair"].isLoaded()) {
+                //plugins["onair"].frame.addPlaylistItem(itemData[0], itemData[1], itemData[2]);
+		// itemData[3] innehåller mer information om låten typ vg-info
+		plugins["onair"].frame.addPlaylistItem(itemData[0], itemData[1], itemData[2], itemData[3]);
+              }
+            }
+          }
+
+          if (plugins["onair"].isLoaded()) {
+            plugins["onair"].frame.updateOnAir();
+          }
+          break;
+      }
+    }
+  }
+
+	function checkClipSwitch(caller) {
+		updateAsxInfo();
+		//debug("checkClipSwitch()");
+		
+			var clipTitle = playerObj.GetMediaInfoString(8);
+			clipTitle = clipTitle.substring(0, clipTitle.length-1);
+		
+		if (clipTitle != getLastClipTitle()) {
+			//debug("SWITCH");
+			if (clipTitle.indexOf("AD") >= 0) {
+				if (!showingAd) {
+					toggleAd("ad.!showing.check");
+					
+				}
+				
+			} else if (clipTitle.indexOf("ONDEMAND") >= 0) {
+				ondemand = true;
+				if( showingAd ) {
+					window.clearTimeout( toggleAdId );
+					toggleAd( "ondemand.showingad" );
+				}
+				
+					if( playerObj.ImageSourceWidth != 0 ) {
+				
+					showingVideo = true;
+					showLayer("playerLayer");
+
+					//flyttar tillbaka playerLagret efter initialspotten (2006-04-19)
+					
+						moveLayer('playerLayer', playerLeft);
+					
+					showFullScreenButton();
+				}
+				
+				
+				NCL = '';
+			} else if (clipTitle.indexOf("MEDIA") >= 0) {
+				NCL = 'The voice';
+				
+			} else {
+				NCL = '';
+				
+			}
+			if (getLastClipTitle().indexOf("AD") >= 0) {
+				introAdDone = true;
+			} else if (getLastClipTitle().indexOf("ONDEMAND") >= 0) {
+				ondemand = false;
+				seekbarTimer(false);
+				hideSeekbar();
+				hideFullScreenButton();
+			}
+			setLastClipTitle(clipTitle);
+		}
+	}
+
+  function bufferStateChanged(start) {
+    //debug("bufferStateChanged("+start+")");
+    if (start) {
+      swapImage("statusIcon", "connecting");    
+      
+      //changeStatus("Buffering (" + playerObj.BufferingProgress + "%)");
+      
+      bufferID = window.setTimeout("bufferStateChanged(true)", 100);
+    } else {
+      // changeStatus("Buffering Complete");
+      checkClipSwitch("buffer");
+      swapImage("statusIcon", "playing");
+      changeStatus("Playing" + (NCL==""?"":": "+NCL));
+      window.clearTimeout(bufferID);
+    }
+  }
+
+  
+
+  function playStateChanged(state) {
+    //debug("playStateChanged("+state+")");
+    switch (state) {
+      case mpStopped:
+      case mpMediaEnded:
+        disableFullScreen();
+        hideFullScreenButton();
+        //toggleAd('stop');
+        if (ondemand) {
+	      
+        }
+        swapImage("statusIcon", "stopped");
+        changeStatus("Stopped");
+        setLastClipTitle("");
+
+        break;
+      case mpPaused:
+        if (ondemand) {
+          seekbarTimer(false);
+        }
+        changeStatus("Paused");
+        break;
+      case mpPlaying:
+        
+        lastEntry = playerObj.getCurrentEntry();
+        
+        checkClipSwitch("play");
+        swapImage("statusIcon", "playing");
+        changeStatus("Playing" + (NCL==""?"":": "+NCL));
+        break;
+      case mpWaiting:
+        disableFullScreen();
+        swapImage("statusIcon", "connecting");
+        changeStatus("Waiting...");
+        break;
+      case mpClosed:
+        disableFullScreen();
+        changeStatus("Closed");
+        break;
+    }
+  }
+
+  function openStateChanged(state) {
+    //debug("openStateChanged("+state+")");
+    swapImage("statusIcon", "connecting");
+
+    switch (state) {
+      case mpPlaylistLocating:
+        changeStatus("Locating...");
+        break;
+      case mpPlaylistConnecting:
+        changeStatus("Connecting...");
+        break;
+      case mpPlaylistLoading:
+        changeStatus("Loading...");
+        break;
+      case mpPlaylistOpening:
+        changeStatus("Opening...");
+        break;
+    }
+  }
+
+
+
+/**********************************************************/
+
+  var mX = 0;
+  var mY = 0;
+  var dX = 0;
+  var dY = 0;
+
+  var volBarX = 130;
+  var volBarY = 379;
+  var volBarW = 59;
+  var volBarH = 13;
+  var volKnodW = 21;
+  var volKnodH = 13;
+
+  var scrollKnodH = 37;
+
+  var seekBarX = 200;
+  var seekBarW = 102;
+  var seekKnodW = 12;
+
+  var volKnodObj = null;
+  var scrollKnodObj = null;
+  var seekKnodObj = null;
+  var seeking = false;
+  var seekPosition = 0;
+  var seekbarTimerId = 0;
+
+  function setVolume(level) {
+    
+    
+    if (document.all) {
+      playerObj.Volume = Math.round(6309.5734 * Math.pow(level, 0.1) + (-10000));
+    } else {
+      playerObj.SetVolume(Math.round(6309.5734 * Math.pow(level, 0.1) + (-10000)));
+    }
+	
+    
+	setCookie( "NWRVolumeCookie", level + 1, 31 );	// a month should be enough for anyone
+  }
+
+  function volumeMouseDown(e) {
+    volKnodObj = getObjectStyle("volKnod");
+    
+    if (document.layers) {
+      document.volKnod.document.captureEvents(Event.MOUSEMOVE);
+      document.volKnod.document.onmousemove = mouseMove;
+      dX = e.pageX - parseInt(volKnodObj.left);
+    } else {
+      dX = mX - parseInt(volKnodObj.left);
+    }
+    return false;
+  }
+
+  function volumeMouseUp(e) {
+    if( volKnodObj ) {
+      if (document.layers) {
+        document.volKnod.document.onmousemove = 0;
+        document.volKnod.document.releaseEvents(Event.MOUSEMOVE);
+      }
+      volKnodObj = null;
+
+
+      swapImage('buttonVolume', 'volume');
+
+    }
+
+    return false;
+  }
+
+  function volumeMouseMove(e) {
+    mX = (document.all)? event.clientX : e.pageX;
+    mY = (document.all)? event.clientY : e.pageY;
+    if (volKnodObj) {
+      var nX = mX - dX;
+      if (nX > volBarX+volBarW-volKnodW) nX = volBarX+volBarW-volKnodW;
+      if (nX < volBarX) nX = volBarX;
+      volKnodObj.left = nX;
+      var vol = ((nX-volBarX) / (volBarW-volKnodW)) * 100;
+      setVolume(vol);
+    }
+    return false;
+  }
+
+  function scrollMouseDown(e) {
+    scrollKnodObj = getObjectStyle("scrollKnod");
+
+    if (document.layers) {
+      document.scrollKnod.document.captureEvents(Event.MOUSEMOVE);
+      document.scrollKnod.document.onmousemove = mouseMove;
+      dY = e.pageY - parseInt(scrollKnodObj.top);
+    } else {
+      dY = mY - parseInt(scrollKnodObj.top);
+    }
+    return false;
+  }
+
+  function scrollMouseUp(e) {
+    if( scrollKnodObj ) {
+      if (document.layers) {
+        document.scrollKnod.document.onmousemove = 0;
+        document.scrollKnod.document.releaseEvents(Event.MOUSEMOVE);
+      }
+      scrollKnodObj = null;
+
+
+      swapImage('buttonScroll', 'scroll');
+
+    }
+
+    return false;
+  }
+
+  function scrollMouseMove(e) {
+    mX = (document.all)? event.clientX : e.pageX;
+    mY = (document.all)? event.clientY : e.pageY;
+    if (scrollKnodObj) {
+      var inner = getObject( "epgInnerLayer" );
+	  var outer = getObject( "epgOuterLayer" );
+      var nY = mY - dY;
+      if (nY > outer.offsetHeight-scrollKnodH) nY = outer.offsetHeight-scrollKnodH;
+      if (nY < 0) nY = 0;
+      scrollKnodObj.top = nY;
+      inner.style.top = ( ( ( outer.offsetHeight - inner.offsetHeight ) * nY ) / ( outer.offsetHeight - scrollKnodH ) ) + "px";
+    }
+    return false;
+  }
+
+  function seekMouseDown(e) {
+    seekbarTimer(false);
+    
+    if (!seekKnodObj) {
+      seekKnodObj = getObjectStyle("seekKnod");
+    }
+    
+    if (document.layers) {
+      document.seekKnod.document.captureEvents(Event.MOUSEMOVE);
+      document.seekKnod.document.onmousemove = mouseMove;
+      dX = e.pageX - parseInt(seekKnodObj.left);
+    } else {
+      dX = mX - parseInt(seekKnodObj.left);
+    }
+    seeking = true;
+    return false;
+  }
+
+  function seekMouseUp(e) {
+    if( seeking ) {
+      seekTo(seekPosition);
+      seekbarTimer(true);
+
+      if (document.layers) {
+        document.seekKnod.document.onmousemove = 0;
+        document.seekKnod.document.releaseEvents(Event.MOUSEMOVE);
+      }
+    
+      seeking = false;
+
+
+      swapImage('buttonSeek', 'seek');
+
+    }
+    
+    return false;
+  }
+
+  function seekMouseMove(e) {
+    mX = (document.all)? event.clientX : e.pageX;
+    mY = (document.all)? event.clientY : e.pageY;
+    if (seeking) {
+      var nX = mX - dX;
+      if (nX > seekBarX+seekBarW-seekKnodW) nX = seekBarX+seekBarW-seekKnodW;
+      if (nX < seekBarX) nX = seekBarX;
+      seekKnodObj.left = nX;
+      seekPosition = ((nX-seekBarX) / (seekBarW-seekKnodW)) * 100;
+      changePositionStatus(secondsToTime(percentToPosition(seekPosition)));
+    }
+    return false;
+  }
+
+  function stop() {
+    stoppedInPlay = true;
+    
+    playerObj.Stop();
+    
+  }
+  
+  function pause() {
+    
+    playerObj.Pause();
+    
+  }
+
+  function play() {
+    
+    playerObj.Play();
+    
+  }
+
+  function isPlaying() {
+    return (status.indexOf("Stopped") == -1);
+  }
+
+  function getPosition() {
+    
+    
+    var seconds = playerObj != null ? playerObj.CurrentPosition : 0;
+    return secondsToTime(seconds);
+    
+    
+  }
+
+  function getDuration() {
+    
+    
+    var seconds = playerObj != null ? playerObj.Duration : 0;
+    return secondsToTime(seconds);
+    
+    
+  }
+  
+  function secondsToTime(seconds) {
+    var strTime = "00:00";
+    if (seconds > 0) {
+      var min = Math.floor(seconds / 60.0);
+      var sec = Math.round(seconds - (min * 60));
+      var strMin = min < 10 ? "0"+min : ""+min;
+      var strSec = sec < 10 ? "0"+sec : ""+sec;
+      strTime = strMin + ":" + strSec;
+    }
+    return strTime;
+  }
+  
+  function percentToPosition(percent) {
+    
+    return playerObj.Duration * (percent / 100)
+    
+  }
+  
+  function seekTo(percent) {
+    var position = percentToPosition(percent);
+    
+    playerObj.CurrentPosition = position;
+    
+  }
+  
+  function updateSeekbar() {
+    if (!seekKnodObj) {
+      seekKnodObj = getObjectStyle("seekKnod");
+    }
+    
+    changePositionStatus(secondsToTime(playerObj.CurrentPosition));
+    var percent = 0;
+    if (playerObj.CurrentPosition > 0 && playerObj.Duration > 0) {
+      percent = (playerObj.CurrentPosition / playerObj.Duration);
+    }
+    
+    seekKnodObj.left = seekBarX + (percent * (seekBarW-seekKnodW));
+  }
+  
+  function seekbarTimer(run) {
+    
+  }
+  
+  function showSeekbar() {
+    
+  }
+  
+  function hideSeekbar() {
+    
+  }
+
+  function enableFullScreen() {
+    if( playerObj && ( playerObj.playState == mpPlaying ) ) {
+
+      playerObj.displaySize = 3;
+
+    }
+  }
+
+  function disableFullScreen() {
+    if( playerObj  ) {
+
+      playerObj.displaySize = 4;
+
+    }
+  }
+
+  function showFullScreenButton() {
+
+    showLayer( "fullScreenButton" );
+
+  }
+
+  function hideFullScreenButton() {
+    hideLayer( "fullScreenButton" );
+  }
+
+	function getCookie( name )
+	{
+		if( document.cookie.length > 0 )
+		{
+			begin = document.cookie.indexOf( name + "=" );
+
+			if( begin >= 0 )
+			{
+				begin += name.length + 1;
+
+				end = document.cookie.indexOf( ";", begin );
+				if( end < 0 ) end = document.cookie.length;
+
+				return unescape( document.cookie.substring( begin, end ) );
+			}
+		}
+
+		return null;
+	}
+
+	function setCookie( name, value, expiredays, expirehours, expiremins, expiresecs )
+	{
+		var args = setCookie.arguments;
+
+		if( args.length < 2 ) return;
+
+		var name = args[ 0 ];
+		var value = args[ 1 ];
+
+		if( args.length == 2 )
+		{
+			document.cookie = name + "=" + escape( value ) + "; path=/";
+		}
+		else
+		{
+			var days, hours, mins, secs, millis;
+
+			days = args[ 2 ];
+
+			if( args.length > 3 ) hours = args[ 3 ];
+			else hours = 0;
+
+			if( args.length > 4 ) mins = args[ 4 ];
+			else mins = 0;
+
+			if( args.length > 5 ) secs = args[ 5 ];
+			else secs = 0;
+
+			if( args.length > 6 ) millis = args[ 6 ];
+			else millis = 0;
+
+			var expireDate = new Date ();
+
+			expireDate.setTime( expireDate.getTime() + ( ( ( days * 24 + hours ) * 60 + mins ) * 60 + secs ) * 1000 + millis );
+
+			document.cookie = name + "=" + escape( value ) + "; expires=" + expireDate.toGMTString() + "; path=/";
+		}
+	}
+
+	function delCookie( name )
+	{
+		if( getCookie( name ) )
+		{
+			document.cookie = name + "=; expires=Thu, 01-Jan-70 00:00:01 GMT";
+		}
+	}
+
+  	function URLEncode(url) {
+	  if (url.indexOf("%") >= 0 ||
+	      url.indexOf("+") >= 0) {
+	    return url;
+	  }
+	  
+		var SAFECHARS = "0123456789" +
+						"ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+						"abcdefghijklmnopqrstuvwxyz" +
+						"-_.!~*'()/:";
+		var HEX = "0123456789ABCDEF";		
+		var encoded = "";
+		for (var i = 0; i < url.length; i++) {
+			var ch = url.charAt(i);
+	    if (ch == " ") {
+		    encoded += "+";
+			} else if (SAFECHARS.indexOf(ch) != -1) {
+		    encoded += ch;
+			} else {
+		    var charCode = ch.charCodeAt(0);
+				if (charCode > 255) {
+					encoded += "+";
+				} else {
+					encoded += "%";
+					encoded += HEX.charAt((charCode >> 4) & 0xF);
+					encoded += HEX.charAt(charCode & 0xF);
+				}
+			}
+		}		
+		return encoded;
+	}
+
+function nwrOndemand() {
+  var args = nwrOndemand.arguments;
+  if (args.length >= 6) {
+    var popup = args[0];
+    var seekable = args[1];
+    var seekTo = args[2];
+    var title = (args[3] != null && args[3] != 'null' && args[3] != '') ? args[3] : null;
+    var moreInfo = (args[4] != null && args[4] != 'null' && args[4] != '') ? args[4] : null;;
+    var lowSrc = args[5];
+    var midSrc = (args.length > 6) ? args[6] : null;
+    var highSrc = (args.length > 7) ? args[7] : null;        
+
+    var url = "http://www.nwrweb.com/player/show/thevoice.se/ondemand";
+
+    if (midSrc != null) {
+      url += "?ondemandLow=" + URLEncode(lowSrc);
+      url += "&ondemandMid=" + URLEncode(midSrc);
+      if (highSrc != null) url += "&ondemandHigh=" + URLEncode(highSrc);
+    } else {
+      url += "?ondemand=" + URLEncode(lowSrc);
+    }
+
+    if (!seekable) url += "&ondemandSeekable=" + seekable;
+    if (seekTo > 0) url += "&ondemandSeekTo=" + seekTo;
+    if (title != null) url += "&ondemandTitle=" + URLEncode(title);
+    if (moreInfo != null) url += "&ondemandMoreInfo=" + URLEncode(moreInfo);
+    
+    if (popup) {
+      var player = window.open(url, "NWRPlayer", "width=525,height=424,scrollbars=no,resizable=no");
+      player.focus();
+    } else {
+      window.location = url;
+      //top.location.href = url;
+    }
+  }
+}
+
+  function initOnAirInfo(){
+	//alert("initOnAir()");
+
+    updateScrollbar();
+
+     
+	//alert("initOnAir()2");
+  }
+
+  function debug(text) {
+    //document.forms["log"].debug.value = text + "\n" + document.forms["log"].debug.value;
+  }
+
+  var status = "";
+  function changeStatus(value) {
+    debug("changeStatus("+value+")");
+    if( value != status ) {
+      status = value;
+      document.getElementById( "statusBarLayer" ).innerHTML = '<FONT CLASS="displayBlueFont">' + value + '</FONT>';
+    }
+  }
+
+  function changePositionStatus(value) {
+    document.getElementById( "positionStatusLayer" ).innerHTML = '<FONT CLASS="displayBlueFont">' + value + '</FONT>';
+  }
+
+  function getObject(objId) {
+    return document.getElementById( objId );
+  }
+
+  function getObjectStyle(objId) {
+    var obj = getObject(objId);
+    return obj.style;
+  }
+
+  function showLayer(objId) {
+    var objStyle = getObjectStyle(objId);
+    if (objStyle) {
+      objStyle.visibility = 'visible';
+    }
+  }
+
+	function moveLayer(objId,x) {
+		var objStyle = getObjectStyle(objId);
+		if (objStyle) {
+			objStyle.left = x;
+		}
+	}
+
+  function hideLayer(objId) {
+    var objStyle = getObjectStyle(objId);
+    if (objStyle) {
+      objStyle.visibility = 'hidden';
+    }
+  }
+
+  var imageCache = new Array();
+
+  function preloadImages() {
+    if (!document.images) return;
+    var args = preloadImages.arguments;
+    for (var i = 0; i < args.length; i+=2) {
+      imageCache[args[i]] = new Image();
+      imageCache[args[i]].src = args[i+1];
+    }
+  }
+
+// START NCL i jukeboxen
+  function asxInfo(){
+    //alert("asxInfo START");
+    //debug( "Copyright = " + playerObj.GetMediaInfoString(10) );
+    //ScriptCommandReceived("CAPTION", playerObj.GetMediaInfoString(10));
+    //debug( "player1 = " + playerObj.GetMediaInfoString(12) );
+    //alert("asxInfo END");
+
+    alert( playerObj.GetMediaInfoString(10));
+
+    if( useWMP6 ) {
+      ScriptCommandReceived("CAPTION", playerObj.GetMediaInfoString(10));
+    } else {
+      ScriptCommandReceived("CAPTION", playerObj.currentMedia.getItemInfo( "Copyright" ));
+    }
+
+  }
+
+  function updateAsxInfo(){
+
+	 
+            ScriptCommandReceived("CAPTION", playerObj.GetMediaInfoString(10));
+     
+
+  }
+ // END NCL i jukeboxen
+
+  function swapImage(objName, key) {
+    if (document.images && imageCache[key] && 
+        document.images[objName].src != imageCache[key].src) {
+      document.images[objName].src = imageCache[key].src;
+    }
+  }
+
+  function swapBGImage( objName, key ) {
+    if( imageCache[ key ] ) {
+      var style = getObjectStyle( objName );
+      style.background = "url(" + imageCache[ key ].src + ")";
+    }
+  }
+
+  var curCategoryObj = null;
+
+  function showCategory(categoryIndex) {
+    var categoryId = "category" + categoryIndex;
+    var categoryObj = getObjectStyle(categoryId);
+    
+    if (curCategoryObj != null) {
+      curCategoryObj.display = "none";
+    }
+
+    categoryObj.display = "block";
+    curCategoryObj = categoryObj;
+
+    updateScrollbar();
+  }
+
+  function updateScrollbar() {
+
+
+
+    var inner = getObject( "epgInnerLayer" );
+	var outer = getObject( "epgOuterLayer" );
+	var knod = getObject( "scrollKnod" );
+	var bar = getObject( "scrollBar" );
+
+	if( inner.offsetHeight > outer.offsetHeight ) {
+		bar.style.visibility = "visible";
+		knod.style.visibility = "visible";
+
+		if( parseInt( inner.style.top ) < outer.offsetHeight - inner.offsetHeight ) {
+			inner.style.top = ( outer.offsetHeight - inner.offsetHeight ) + "px";
+			knod.style.top = ( outer.offsetHeight - 37 ) + "px";
+		}
+		else {
+			knod.style.top = ( ( outer.offsetHeight - scrollKnodH ) * parseInt( inner.style.top ) ) / ( outer.offsetHeight - inner.offsetHeight );
+		}
+	}
+	else {
+		bar.style.visibility = "hidden";
+		knod.style.visibility = "hidden";
+		inner.style.top = "0px";
+		knod.style.top = "0px";
+	}
+
+
+
+  }
+
+  function browse(url) {
+    plugins['browser'].navigate(url);
+    showPlugin('browser');
+  }
+
+	function toggleAd(caller) {
+		var styleObj = null;
+		var obj = null;
+		var plStyleObj = null;
+		var plObj = null;
+		obj = document.getElementById('adLayer');
+		plObj = document.getElementById('playerLayer');
+		window.clearTimeout(toggleAdId);
+
+		if (obj != null && plObj != null) {
+			styleObj = obj.style;
+			plStyleObj = plObj.style;
+			//styleObj.zIndex = 25;
+			if (styleObj.visibility == 'visible') {
+				showPlugin('onair');
+				showingAd = false;
+				styleObj.visibility = 'hidden';
+				
+				if (ondemand && showingVideo) {
+					plStyleObj.visibility = 'visible';
+				}
+				
+					swapImage('buttonMaxMin', 'maximize');
+				
+			} else {
+				showingAd = true;
+				styleObj.visibility = 'visible';
+				
+				if (ondemand) {
+					plStyleObj.visibility = 'hidden';
+				}
+				hideCurrentPlugin();
+				
+					if (true) {
+						swapImage('buttonMaxMin', 'minimize');
+					}
+				
+			}
+		}
+	}
+
+  function adSafetyNet() {
+    if (showingAd) {
+      toggleAd();
+    }
+  }
+
+  function exitPlayer() {
+
+    stop();
+    window.stop();
+
+  }
+
+</SCRIPT>
+
+</HEAD>
+
+
+
+<style type="text/css">
+	body { background:url(http://www.unm.edu/graphics/bg-unm.gif) no-repeat;}
+</style>
+<BODY BGCOLOR="#FFFFFF" MARGINWIDTH=0 MARGINHEIGHT=0 LEFTMARGIN=0 TOPMARGIN=0 BACKGROUND="" onload="initOnAirInfo();">
+
+<TABLE WIDTH=545 HEIGHT=424 CELLPADDING=0 CELLSPACING=0 BORDER=0>
+
+
+<TR>
+<TD WIDTH=545 HEIGHT=60 COLSPAN=3 VALIGN="top">
+<FONT CLASS="normal">
+</FONT></TD>
+</TR>
+
+
+<TR>
+<TD WIDTH=14 HEIGHT=364>
+<IMG SRC="http://www.nwrweb.com/player/img/pix.gif" WIDTH=14 HEIGHT=1></TD>
+<TD WIDTH=360 VALIGN="top">
+<FONT CLASS="normal">
+
+
+
+<TABLE WIDTH=350 HEIGHT=350 CELLPADDING=0 CELLSPACING=0 BORDER=10 BACKGROUND="http://www.nwrweb.com/player/img/skin/minradio/embed_bg.gif">
+<TR>
+<TD WIDTH=350 HEIGHT=312 COLSPAN=5>
+<IMG SRC="http://www.nwrweb.com/player/img/pix.gif" WIDTH=1 HEIGHT=312></TD>
+</TR>
+<TR>
+<TD WIDTH=17 HEIGHT=38>
+<IMG SRC="http://www.nwrweb.com/player/img/pix.gif" WIDTH=17 HEIGHT=1></TD>
+<TD WIDTH=45 VALIGN="top">
+
+
+
+<A HREF="http://www.nwrweb.com/player/show/thevoice.se/radiocitysthlm/48" ONMOUSEOVER="swapImage('buttonPlay', 'playsel');" ONMOUSEOUT="swapImage('buttonPlay', 'play');" TITLE=" Play ">
+
+<IMG NAME="buttonPlay" SRC="http://www.nwrweb.com/player/img/skin/minradio/button_play.gif" WIDTH=45 HEIGHT=26 BORDER=0 ALT=" Play "></A></TD>
+
+<TD WIDTH=44 VALIGN="top">
+
+
+
+<A HREF="http://www.nwrweb.com/player/skin/3.4.jsp?player=thevoice.se&channel=2&stop" ONMOUSEOVER="swapImage('buttonStop', 'stopsel');" ONMOUSEOUT="swapImage('buttonStop', 'stop');" TITLE=" Stop ">
+
+<IMG NAME="buttonStop" SRC="http://www.nwrweb.com/player/img/skin/minradio/button_stop.gif" WIDTH=44 HEIGHT=26 BORDER=0 ALT=" Stop "></A></TD>
+
+<TD WIDTH=200 VALIGN="top">
+<IMG SRC="http://www.nwrweb.com/player/img/pix.gif" WIDTH=200 HEIGHT=1></TD>
+<TD WIDTH=44 VALIGN="bottom">
+&nbsp;</TD>
+</TR>
+</TABLE>
+
+
+
+</FONT></TD>
+<TD WIDTH=171 VALIGN="top">
+<IMG SRC="http://www.nwrweb.com/player/img/pix.gif" WIDTH=171 HEIGHT=2><BR>
+<IMG SRC="http://www.nwrweb.com/player/img/pix.gif" WIDTH=135 HEIGHT=33 BORDER=0 STYLE="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://www.nwrweb.com/player/img/skin/minradio/minradio.png', sizingMethod='scale');"><BR>
+
+
+
+
+
+<div id="epgOuterLayer" style="position: relative; overflow: hidden; width: 154px; height: 346px">
+
+
+<DIV ID="scrollKnod" STYLE="position:absolute;left:142px;top:0px;visibility:hidden;z-index:11;" ONMOUSEDOWN="scrollMouseDown();">
+<A ONMOUSEOVER="swapImage('buttonScroll', 'scrollsel');" ONMOUSEOUT="swapImage('buttonScroll', 'scroll');" TITLE=" Scroll "><IMG NAME="buttonScroll" SRC="http://www.nwrweb.com/player/img/skin/minradio/button_scroll.gif" WIDTH=12 HEIGHT=37 BORDER=0 STYLE="cursor:hand;" ALT=" Scroll "></A></DIV>
+
+<DIV ID="scrollBar" STYLE="position:absolute;left:142px;top:0px;visibility:hidden;z-index:10;">
+<IMG SRC="http://www.nwrweb.com/player/img/skin/minradio/scrollbar.gif" WIDTH="12" HEIGHT="346"></DIV>
+
+<div id="epgInnerLayer" style="position: absolute; width: 135px; top: 0px; left: 0px">
+
+
+
+
+
+
+
+
+
+<TABLE WIDTH=135 CELLPADDING=0 CELLSPACING=0 BORDER=0>
+
+<TR>
+
+<TD HEIGHT= VALIGN="top">
+<FONT CLASS="stationSelected">
+The Voice
+</FONT></TD>
+
+</TR>
+
+<TR>
+
+<TD HEIGHT= VALIGN="top"><A HREF="http://www.nwrweb.com/player/show/thevoice.se/radiocitygbg/48" CLASS="station">Mix Megapol<br>Radio City Gbg</A></TD>
+
+</TR>
+
+<TR>
+
+<TD HEIGHT= VALIGN="top"><A HREF="http://www.nwrweb.com/player/show/thevoice.se/radiocitymalmo/48" CLASS="station">Mix Megapol<br>Radio City Malm&ouml;</A></TD>
+
+</TR>
+
+<TR>
+
+<TD HEIGHT= VALIGN="top"><A HREF="http://www.nwrweb.com/player/show/thevoice.se/mixmegapol/48" CLASS="station">Mix Megapol</A></TD>
+
+</TR>
+
+<TR>
+
+<TD HEIGHT= VALIGN="top"><A HREF="http://www.nwrweb.com/player/show/thevoice.se/vinyl107/48" CLASS="station">107.1 Vinyl</A></TD>
+
+</TR>
+
+<TR>
+
+<TD HEIGHT= VALIGN="top"><A HREF="http://www.nwrweb.com/player/show/thevoice.se/rockklassiker/48" CLASS="station">Rockklassiker</A></TD>
+
+</TR>
+
+<TR>
+
+<TD HEIGHT= VALIGN="top"><A HREF="http://www.nwrweb.com/player/show/thevoice.se/efm/48" CLASS="station">Studio 107,5</A></TD>
+
+</TR>
+
+</TABLE>
+
+
+
+
+
+
+
+</div>
+</div>
+
+
+
+</TD>
+</TR>
+</TABLE>
+
+
+<DIV ID="statusBarLayer" CLASS="displayLabel" STYLE="left:53px;top:349px;width:236;height:14;overflow:hidden;z-index:10"></DIV>
+<DIV ID="statusIconLayer" CLASS="displayLabel" STYLE="left:33px;top:349px;">
+<IMG NAME="statusIcon" SRC="http://www.nwrweb.com/player/img/pix.gif" WIDTH=13 HEIGHT=13 BORDER=0></DIV>
+
+
+<DIV ID="clipHistoryLayer" CLASS="displayLabel" STYLE="left:0px;top:0px;z-index:0;">
+	<FORM NAME="clipHistoryForm">
+		<INPUT TYPE="hidden" NAME="lastClipTitle" VALUE="bitch">
+	</FORM>
+</DIV>
+
+
+
+
+
+<DIV ID="volKnod" STYLE="position:absolute;left:149px;top:379px;" ONMOUSEDOWN="volumeMouseDown();">
+<A ONMOUSEOVER="swapImage('buttonVolume', 'volumesel');" ONMOUSEOUT="swapImage('buttonVolume', 'volume');" TITLE=" Volume "><IMG NAME="buttonVolume" SRC="http://www.nwrweb.com/player/img/skin/minradio/button_volume.gif" WIDTH=21 HEIGHT=13 BORDER=0 STYLE="cursor:hand;" ALT=" Volume "></A></DIV>
+
+
+
+
+
+
+
+
+<DIV ID="fullScreenButton" STYLE="position:absolute;left:330px;top:371px;visibility:hidden;z-index:10;">
+<A HREF="#" ONCLICK="enableFullScreen()" TITLE=" Full-screen "><IMG SRC="http://www.nwrweb.com/player/img/skin/minradio/fullscreen.gif" WIDTH=19 HEIGHT=14 BORDER=0 ALT=" Full-screen "></A></DIV>
+
+
+
+
+
+
+
+
+
+<DIV ID="playerLayer" CLASS="displayLabel" STYLE="position:absolute;left:550px;top:92px;z-index:45;visibility:hidden;width:320;height:250;background-color:#000000;">
+
+
+<OBJECT ID="player" 
+        WIDTH=320
+        HEIGHT=250
+
+
+	CLASSID="CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95" 
+	CODEBASE="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,5,715" 
+        STANDBY="Loading Microsoft® Windows® Media Player components..." 
+        TYPE="application/x-oleobject"
+        VIEWASTEXT STYLE="color:#FF0000;">
+
+
+  
+
+  <PARAM NAME="FileName" VALUE="http://www.nwrweb.com/player/asx/2.asx?playerKey=thevoice.se">
+
+  
+
+  <PARAM NAME="Volume" VALUE="-500">
+  <PARAM NAME="Visible" VALUE="true">
+  <PARAM NAME="AutoStart" VALUE="true">
+  <PARAM NAME="AutoSize" VALUE="true">
+  <PARAM NAME="AnimationatStart" VALUE="false">
+  <PARAM NAME="SendPlayStateChangeEvents" VALUE="true">
+  <PARAM NAME="SendOpenStateChangeEvents" VALUE="true">
+  <PARAM NAME="SendWarningEvents" VALUE="false">
+  <PARAM NAME="SendErrorEvents" VALUE="false">
+  <PARAM NAME="TransparentAtStart" VALUE="true">
+  <PARAM NAME="ShowControls" VALUE="false">
+  <PARAM NAME="ShowTracker" VALUE="false">
+  <PARAM NAME="EnableTracker" VALUE="false">
+  <PARAM NAME="ShowStatusBar" VALUE="false">
+  <PARAM NAME="ShowDisplay" VALUE="false">
+  <PARAM NAME="ShowPositionControls" VALUE="false">
+  <PARAM NAME="uiMode" VALUE="none">
+  <PARAM NAME="EnableContextMenu" VALUE="false">
+  <PARAM NAME="ClickToPlay" VALUE="false">
+  <PARAM NAME="AllowScan" VALUE="false">
+  <PARAM NAME="AutoRewind" VALUE="true">
+  <PARAM NAME="AllowChangeDisplaySize" VALUE="true">
+
+
+
+  <EMBED TYPE="application/x-mplayer2" 
+         ID=player 
+         NAME="player" 
+         
+	 SRC="http://www.nwrweb.com/player/asx/2.asx?playerKey=thevoice.se"
+         
+         VOLUME=-500 
+         xPLUGINSPAGE="http://www.microsoft.com/Windows/MediaPlayer/" 
+         PLUGINSPAGE="http://download.microsoft.com/download/winmediaplayer/nsplugin/6.4/WIN98/EN-US/wmpplugin.exe" 
+         WIDTH=320 
+         HEIGHT=250 
+         BORDER=0 
+         AUTOSTART=1 
+         SHOWSTATUSBAR=0 
+         SHOWCONTROLS=0 
+         SHOWTRACKER=0 
+         ENABLETRACKER=0
+         SHOWDISPLAY=0 
+         DISPLAYSIZE=0 
+         SHOWPOSITIONCONTROLS=0 
+         AUTOSIZE=1 
+         SHOWGOTOBAR=0 
+         SHOWCAPTIONING=0 
+         AUTOREWIND=1 
+         ANIMATIONATSTART=0 
+         TRANSPARENTATSTART=0 
+         ALLOWSCAN=0 
+         ENABLECONTEXTMENU=0 
+         CLICKTOPLAY=0 
+         ALLOWCHANGEDISPLAYSIZE=1
+         INVOKEURLS=0>
+  </EMBED>
+
+
+
+</OBJECT>
+
+
+
+<OBJECT classid=CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6  codebase="../../#Version=7,0,0,1954" height=1 id=WMP7 width=1 VIEWASTEXT></OBJECT>
+
+
+</DIV>
+
+<!--
+<FORM NAME="log">
+<TEXTAREA NAME="debug" COLS=100 ROWS=20 STYLE="background-color:#000000;color:#00cc00;"></TEXTAREA>
+</FORM>
+<A HREF="#" ONCLICK="fireScriptCommand();">Fire</A>
+<A HREF="#" ONCLICK="pos();">seek</A>
+-->
+
+<IFRAME ID="pluginFrameIDonair" NAME="pluginFrameonair" SRC="about:blank" WIDTH=0 HEIGHT=0 FRAMEBORDER=0 SCROLLING="no"></IFRAME>
+
+<SCRIPT language="JavaScript">
+<!--
+// definierar var videfönstret ska vara i x-led så att det kan flyttas tillbaka efter reklamen (2006-04-19)
+var playerLeft = 29
+
+
+
+      fHasWMP64 = (player.FileName != "");
+      fHasWMP7 = (WMP7.URL == "");
+
+
+
+  if (fHasWMP7) {
+
+    WMPVer = WMP7.versionInfo;
+
+    fHasWMP = true;
+  } else if (fHasWMP64) {
+    WMPVer = "6.4";
+    fHasWMP = true;
+  } else {
+    WMPVer = "unknown";
+    fHasWMP = false;
+  }   
+
+  function getPlayerMajorVer() {
+    if (fHasWMP) {
+      var strVer = new String(WMPVer);
+      s = strVer.split(".");
+      return s[0];
+    }
+    return "unknown";
+  }
+
+  function getPlayerMinorVer() {
+    if (fHasWMP) {
+      var strVer = new String(WMPVer);
+      s = strVer.split(".");
+      if (s[1]) {
+        return s[1];
+      } else {
+        return("unknown");
+      }
+    }
+    return "unknown";
+  }
+
+  var WMPVerShort = getPlayerMajorVer() + "_" + getPlayerMinorVer();
+
+//-->
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+  playerObj = document.player;
+
+
+
+  if( !fHasWMP ) {
+
+
+    alert( "You need to have Windows Media player installed to use this service." );
+
+
+
+
+
+  }
+
+
+  setCookie( "test", "test" );
+  if( getCookie( "test" ) == "test" ) {
+    delCookie( "test" );
+  } else {
+
+    alert( "You need to activate the cookies on your computer." );
+
+
+  }
+
+
+
+
+
+  preloadImages( "connecting", "http://www.nwrweb.com/player/img/skin/minradio/connecting.gif",
+                 "playing", "http://www.nwrweb.com/player/img/skin/minradio/playing.gif",
+                 "stopped", "http://www.nwrweb.com/player/img/skin/minradio/stopped.gif",
+                 "tab", "http://www.nwrweb.com/player/img/skin/minradio/tab.gif",
+                 "tabsel", "http://www.nwrweb.com/player/img/skin/minradio/tab_selected.gif",
+                 "play", "http://www.nwrweb.com/player/img/skin/minradio/button_play.gif",
+                 "playsel", "http://www.nwrweb.com/player/img/skin/minradio/button_play_selected.gif",
+                 "stop", "http://www.nwrweb.com/player/img/skin/minradio/button_stop.gif",
+                 "stopsel", "http://www.nwrweb.com/player/img/skin/minradio/button_stop_selected.gif",
+                 "volume", "http://www.nwrweb.com/player/img/skin/minradio/button_volume.gif",
+                 "volumesel", "http://www.nwrweb.com/player/img/skin/minradio/button_volume_selected.gif",
+                 "scroll", "http://www.nwrweb.com/player/img/skin/minradio/button_scroll.gif",
+                 "scrollsel", "http://www.nwrweb.com/player/img/skin/minradio/button_scroll_selected.gif",
+                 "maximize", "http://www.nwrweb.com/player/img/skin/minradio/button_maximize.gif",
+                 "minimize", "http://www.nwrweb.com/player/img/skin/minradio/button_minimize.gif",
+                 "seek", "http://www.nwrweb.com/player/img/skin/minradio/button_seek.gif",
+                 "seeksel", "http://www.nwrweb.com/player/img/skin/minradio/button_seek_selected.gif" );
+
+
+    addPlugin('onair', 'http://www.nwrweb.com/player/skin/plugins/onair3.4.jsp?playerKey=thevoice.se&stationKey=radiocitysthlm');
+
+
+plugins["onair"].load();
+
+
+  if( !showingAd ) {
+    showPlugin( 'onair' );
+  }
+
+  function fireScriptCommand() {
+    
+      ScriptCommandReceived("CAPTION", playerObj.GetMediaInfoString(10));
+    
+  }
+
+  window.onunload = exitPlayer;
+
+
+
+  if (document.layers) {
+  
+    document.volKnod.document.captureEvents(Event.MOUSEDRAG|Event.MOUSEDOWN|Event.MOUSEUP);
+    document.volKnod.document.onmousedown = volumeMouseDown;
+    document.volKnod.document.onmouseup = volumeMouseUp;
+    
+  
+    if( document.getElementById( "scrollKnod" ) ) {
+      document.scrollKnod.document.captureEvents(Event.MOUSEDRAG|Event.MOUSEDOWN|Event.MOUSEUP);
+      document.scrollKnod.document.onmousedown = scrollMouseDown;
+      document.scrollKnod.document.onmouseup = scrollMouseUp;
+    }
+  } else {
+  
+    document.getElementById( "volKnod" ).onmousemove = volumeMouseMove;
+    document.getElementById( "volKnod" ).onmouseup = volumeMouseUp;
+    
+  
+    if( document.getElementById( "scrollKnod" ) ) {
+      document.getElementById( "scrollKnod" ).onmousemove = scrollMouseMove;
+      document.getElementById( "scrollKnod" ).onmouseup = scrollMouseUp;
+    }
+  }
+
+
+
+
+
+	var vol = eval( getCookie( "NWRVolumeCookie" ) );
+	if( vol ) vol--;
+	else vol = 50;
+	setVolume( vol );
+
+	if( volKnodObj = getObjectStyle( "volKnod" ) )
+	{
+		volKnodObj.left = volBarX + parseInt( ( vol * ( volBarW - volKnodW ) ) / 100 );
+		volKnodObj = null;
+ 	}
+
+	debug( "vol = " + vol );
+
+
+
+</SCRIPT>
+
+
+
+
+<div style="position:absolute;left:0px;top:0px">
+<!-- NWR -->
+
+<!-- START TNS-metrix v11 -->
+<script type="text/javascript" src="/script/tmv11.js"></script>
+<script type="text/javascript">
+<!--
+var tmsec = new Array ('tmsec=se', 'tmsec=Player_thevoice.se', 'tmsec=Station_radiocitysthlm'); 
+getTMqs('http', '', '', 'nordicwebradio_no', 'no', 'ISO-8859-15', tmsec);
+//-->
+</script>
+
+<noscript><img src="http://statistik-gallup.net/V11***nordicwebradio_no/no/ISO-8859-15/tmsec=se&tmsec=Player_thevoice.se&tmsec=Station_radiocitysthlm/"></noscript>
+<!-- END  TNS-metrix v11 -->
+
+
+<!-- START RedMeasure V4 - Java v1.1  Revision: 1.8 -->
+<!-- COPYRIGHT 2000 Red Sheriff Limited -->
+
+<script language="JavaScript"><!--
+var pCid="no_nordicwebradio-no_0";
+var w0=1;
+var refR=escape(document.referrer);
+if (refR.length>=252) refR=refR.substring(0,252)+"...";
+//--></script>
+<script language="JavaScript1.1"><!--
+var w0=0;
+//--></script>
+<script language="JavaScript1.1" src="http://server-no.imrworldwide.com/a1.js">
+</script>
+<script language="JavaScript"><!--
+if(w0){
+var imgN='<img src="http://server-no.imrworldwide.com/cgi-bin/count?ref='+
+        refR+'&cid='+pCid+'" width=1 height=1>';
+if(navigator.userAgent.indexOf('Mac')!=-1){document.write(imgN);
+}else{
+        document.write('<applet code="Measure.class" '+
+        'codebase="http://server-no.imrworldwide.com/"'+'width=1 height=2>'+
+        '<param name="ref" value="'+refR+'">'+'<param name="cid" value="'+pCid+
+        '"><textflow>'+imgN+'</textflow></applet>');
+        }
+}
+document.write("<COMMENT>");
+//-->
+</script>
+<noscript>
+<img src="http://server-no.imrworldwide.com/cgi-bin/count?cid=no_nordicwebradio-no_0" width=1 height=1>
+</noscript>
+</COMMENT>
+
+<!-- END RedMeasure V4 -->
+
+</div>
+
+
+
+
+</BODY>
+</HTML>
+

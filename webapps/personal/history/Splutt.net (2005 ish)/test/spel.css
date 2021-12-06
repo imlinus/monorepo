@@ -1,0 +1,11 @@
+
+
+
+
+
+.psTipOnLeft {
+	background-image: 				url('bg-left2.gif');
+	background-repeat :				yes-repeat;
+	background-position : 			left top;
+	cursor:					hand;	
+}

@@ -1,0 +1,18 @@
+<?php
+function cut($str,$length,$maxlines=null) 
+{
+	if ($maxlines>0) {
+		$str=explode("\n",$str);
+		foreach ($str as $l) {
+			$i++;
+			if ((!$l && $i == $maxlines) || $i > $maxlines) break;
+			else $buffer[] = $l;
+		}
+		$str = implode("\n",$buffer);
+	}
+	if ($length > 0 && strlen($str)>$length) return trim(substr($str,0,$length-3))."...";
+	else return $str;
+}
+
+$text = cut($_POST['text'],300);
+?>

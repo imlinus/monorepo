@@ -1,0 +1,180 @@
+  .displayLabel {
+    position: absolute;
+    border: 0px;
+  }
+
+  .plugin {
+    position: absolute;
+    border: 0px;
+    visibility: hidden;
+  }
+
+  .displayBlueFont {
+    font-family: MS Sans Serif, Arial, Helvetica;
+    font-size: 11px;
+    color: #89A4FF;
+    text-decoration: none;
+  }
+  .displayBlueFont:hover {
+    color: #FFCC66;
+    text-decoration: underline;
+  }
+  .displayBlackFont {
+    font-family: MS Sans Serif, Arial, Helvetica;
+    font-size: 11px;
+    color: #000000;
+    text-decoration: none;
+  }
+  .displayWhiteFont {
+    font-family: MS Sans Serif, Arial, Helvetica;
+    font-size: 11px;
+    color: #FFFFFF;
+    text-decoration: none;
+  }
+  .displayWhiteFont:hover {
+    color: #FFCC66;
+    text-decoration: underline;
+  }
+  .displayBlackFont {
+    font-family: MS Sans Serif, Arial, Helvetica;
+    font-size: 11px;
+    color: #000000;
+    text-decoration: none;
+  }
+
+  .displayGreyFont {
+    font-family: MS Sans Serif, Arial, Helvetica;
+    font-size: 11px;
+    color: #999999;
+    text-decoration: none;
+  }
+  .displayGreyFont:hover {
+    color: #FFCC66;
+    text-decoration: underline;
+  }
+
+  .displayWhiteTitleFont {
+    font-family: Arial, Helvetica;
+    font-size: 15px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-decoration: none;
+  }
+  .displayBlackTitleFont {
+    font-family: Arial, Helvetica;
+    font-size: 15px;
+    font-weight: bold;
+    color: #000000;
+    text-decoration: none;
+  }
+  .displayTextBox {
+    color: #FFFFFF;
+    background-color: #222222;
+    font-family: verdana, arial;
+    font-size: 10px;
+    border-top: #FFCC66 1px solid;
+    border-bottom: #FFCC66 1px solid;
+    border-left: #FFCC66 1px solid;
+    border-right: #FFCC66 1px solid;
+    scrollbar-face-color: #FFFFFF; 
+    scrollbar-base-color: #FFFFFF;
+    scrollbar-highlight-color: #000000; 
+    scrollbar-shadow-color: #000000; 
+    scrollbar-3dlight-color: #FFFFFF;
+    scrollbar-arrow-color: #000000;
+    scrollbar-track-color: #FFFFFF;
+    scrollbar-darkshadow-color: #FFFFFF;
+  }
+
+  .displayScroll {
+    scrollbar-face-color: #DDDDDD;
+    scrollbar-highlight-color: #FFFFFF; 
+    scrollbar-3dlight-color: #FFFFFF;
+    scrollbar-shadow-color: #AAAAAA; 
+    scrollbar-darkshadow-color: #AAAAAA;
+    scrollbar-arrow-color: #000000;
+    scrollbar-track-color: #000000;
+    xborder: 0px;
+    xscrollbar-face-color: #000000; 
+    xscrollbar-base-color: #000000;
+    xscrollbar-highlight-color: #89A4FF; 
+    xscrollbar-shadow-color: #89A4FF; 
+    xscrollbar-3dlight-color: #000000;
+    xscrollbar-arrow-color: #89A4FF;
+    xscrollbar-track-color: #000000;
+    xscrollbar-darkshadow-color: #000000;
+  }
+
+  .tab {
+    font-family: Arial, Helvetica;
+    font-size: 10px;
+    font-weight: bold;
+    color: #000000;
+    text-decoration: none;
+  }
+
+  .tabSelected {
+    font-family: Arial, Helvetica;
+    font-size: 10px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-decoration: none;
+  }
+
+.normal {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10px;
+}
+
+.category {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 11px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background-color: #666666;
+  text-decoration: none;
+  width: 135px;
+}
+
+.station {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10px;
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+  width: 135px;
+  margin-bottom: 2px;
+}
+.station:hover {
+  color: #FFFFFF;
+  background-color: #000000;
+}
+
+.stationSelected {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background-color: #000000;
+  text-decoration: none;
+  width: 135px;
+  margin-bottom: 2px;
+}
+
+.station
+{
+	padding-left: 7px;
+	display: block;
+
+	width: 135px;
+
+}
+
+.stationSelected
+{
+	padding-left: 7px;
+	display: block;
+
+	width: 135px;
+
+}

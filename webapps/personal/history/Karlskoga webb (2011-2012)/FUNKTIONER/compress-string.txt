@@ -1,0 +1,17 @@
+$string = "Lorem ipsum dolor sit amet";
+$compressed = gzcompress($string);
+
+
+
+echo "Original size: ". strlen($string)."\n";
+/* prints
+Original size: 100
+*/
+
+echo "Compressed size: ". strlen($compressed)."\n";
+/* prints
+Compressed size: 18
+*/
+
+// getting it back
+$original = gzuncompress($compressed);

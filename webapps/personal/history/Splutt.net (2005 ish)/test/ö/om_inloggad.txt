@@ -1,0 +1,19 @@
+<?php
+session_start();
+
+if(!(session_is_registered('userid')))
+{
+    //användaren är inte inloggad, skickar tillbaka honom till inloggningssidan
+    header("Location: ../index.php");
+}
+else
+{
+if(location == "in.php?ui=$_SESSION["userid"];
+{
+}
+else
+{
+header("Location: in.php?ui="$_SESSION["userid"]");
+}
+}
+?>

@@ -4,4 +4,7 @@ node_modules/
 dump/
 history/
 
+operating-system/workspace
+operating-system/init
+
 webapps/personal/history

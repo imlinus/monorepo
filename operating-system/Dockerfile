@@ -7,10 +7,10 @@ RUN apt-get update
 RUN apt install -y \
 gcc cross-gcc-dev ca-certificates build-essential libncurses5 libncurses5-dev \
 bison flex libelf-dev libssl-dev bc xorriso make xz-utils file gawk wget tar rsync \
-zsh pv nano lzip texinfo sed gzip qemu qemu-system-x86
+zsh pv nano lzip texinfo sed gzip grub-common grub-pc-bin qemu qemu-system-x86
 
 COPY . /docker
 WORKDIR /docker
 
-# RUN chmod +x ./build-iso.sh
-# RUN ./build-iso.sh build
+# RUN chmod +x ./build.sh
+# RUN ./build.sh --build-all

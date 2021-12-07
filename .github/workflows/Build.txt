@@ -1,0 +1,32 @@
+name: Build_Lily_OS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Update Aptitude
+      run: sudo apt-get update
+    
+    - name: Install Requiremnts
+      run: sudo apt-get -y install wget make gawk gcc bc bison flex xorriso libelf-dev libssl-dev
+    
+    - name: Change Permission
+      run: chmod +x ./operating-system/build.sh
+
+    - name: Start Build
+      run: ./operating-system/build.sh --build-all
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: OS
+        path: lily-os.iso

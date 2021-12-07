@@ -2,6 +2,9 @@ First, we've gotta setup our toolchain. Or the cross-compiler as it's sometimes 
 
 This is then what will build our distro for us
 
+Our goal is to create a `bzImage` out of the kernel,
+and a `cpio.gz` from our initial file system (including Toybox https://en.wikipedia.org/wiki/Toybox)
+
 
 Useful commands:
 ```bash
@@ -12,4 +15,4 @@ chmod +x qemu-x86_64.sh
 ./qemu-x86_64.sh
 ```
 
-docker cp 11074eb51d79:/docker/dist/x86_64.zip C:/Users/billgates/x86_64.zip
+docker cp ffae17e2a6d7:/docker/workspace/dist/root/x86_64/lily-os.iso C:/Users/billgates/lily-os.iso

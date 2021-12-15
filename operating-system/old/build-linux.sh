@@ -93,7 +93,7 @@ build_toybox () {
     make defconfig
 
     # Build static toybox with musl-cross-make gcc toolchain
-    LDFLAGS="--static" CROSS_COMPILE=$DOWNLOADS_DIR/x86_64-linux-musl-cross/bin/x86_64-linux-musl- make toy
+    LDFLAGS="--static" CROSS_COMPILE=$DOWNLOADS_DIR/x86_64-linux-musl-cross/bin/x86_64-linux-musl- make toybox
     mv toybox $DIST_DIR
     exit
 
@@ -148,7 +148,7 @@ build_linux () {
 
   prepare_folders
 
-  # download_dependencies
+   download_dependencies
   # extract_dependencies
 
   # build_toybox

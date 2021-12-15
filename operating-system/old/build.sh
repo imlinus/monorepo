@@ -38,15 +38,22 @@ EOF
 # Build all
 # ---------
 build_all () {
+  clear
+  welcome
+
+  is_root_check
+  cpu_check
+  prepare_workspace
+
   welcome
 
   build_toolchain
   build_linux
 }
 
-# ---------------
-# Initial command
-# ---------------
+# ----------------
+# Initial commands
+# ----------------
 case "$1" in
   "--build-all") build_all ;;
   "--build-toolchain") build_toolchain ;;

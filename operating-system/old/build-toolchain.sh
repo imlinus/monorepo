@@ -35,8 +35,6 @@ download_toolchain_dependencies () {
     wget $X86_64_MUSL_CROSS_URL -q --show-progress --progress=bar:force 2>&1
   fi
 
-  # wget https://github.com/landley/toybox/archive/$TOYBOX_VERSION.tar.gz -O - | tar -xz;
-
   cd $WORKSPACE_DIR || exit
 }
 

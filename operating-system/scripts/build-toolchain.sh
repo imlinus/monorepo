@@ -3,7 +3,7 @@
 # ---------------
 # Download source
 # ---------------
-download_source () {
+download_toolchain_source () {
   cd ${SOURCE_DIR} || exit
 
   print "Downloading source"
@@ -14,7 +14,7 @@ download_source () {
   wget ${GMP_URL} -q --show-progress --progress=bar:force 2>&1
   wget ${MPC_URL} -q --show-progress --progress=bar:force 2>&1
   wget ${MPFR_URL} -q --show-progress --progress=bar:force 2>&1
-  # wget ${ISL_URL} -q --show-progress --progress=bar:force 2>&1
+  wget ${ISL_URL} -q --show-progress --progress=bar:force 2>&1
 
   cd ..
 }
@@ -22,7 +22,7 @@ download_source () {
 # --------------
 # Extract source
 # --------------
-extract_source () {
+extract_toolchain_source () {
   cd ${SOURCE_DIR} || exit
 
   print "Extracting source"
@@ -199,8 +199,8 @@ EOF
 # Build
 # -----
 build_toolchain () {
-  download_source
-  extract_source
+  download_toolchain_source
+  extract_toolchain_source
 
   # Build toolchain (cross-compiler)
   install_linux_headers

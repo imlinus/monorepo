@@ -10,9 +10,7 @@ bison flex libelf-dev libssl-dev bc xorriso make xz-utils file gawk wget tar rsy
 zsh pv nano lzip texinfo sed gzip grub-common grub-pc-bin qemu qemu-system-x86
 
 COPY . /docker
-WORKDIR /docker
+WORKDIR /docker/scripts
 
-RUN chmod +x ./test.sh
-
-RUN ./test.sh --build
-
+# RUN chmod +x ./test.sh
+# RUN ./test.sh --build

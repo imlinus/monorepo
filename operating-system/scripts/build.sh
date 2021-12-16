@@ -27,9 +27,6 @@ clean_source () {
   rm -rf binutils-${BINUTILS_VERSION} gcc-${GCC_VERSION} linux-${KERNEL_VERSION} musl-${MUSL_VERSION}
 }
 
-# ----
-# Test
-# ----
 test () {
   cd ${BASEDIR}
 
@@ -38,9 +35,6 @@ test () {
   fi
 }
 
-# ----
-# Help
-# ----
 help () {
   cat <<EOF
 ${LILY1}
@@ -53,9 +47,6 @@ ${LILY6}
 EOF
 }
 
-# -------
-# Welcome
-# -------
 welcome () {
   cat <<EOF
 ${LILY1}
@@ -93,6 +84,7 @@ case "$1" in
   "--build-toolchain") build_toolchain ;;
   "--build-linux") build_linux ;;
   "--build-all") build_all ;;
+  "--clean") clean ;;
   "--help") help ;;
   "") help ;;
 esac

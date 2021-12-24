@@ -1,0 +1,68 @@
+{
+	"name": "cryptoticker",
+	"displayName": "CryptoTicker",
+	"description": "Live ticker for cryptocurrencies like Bitcoin, Ethereum, Ripple, Litecoin, etc.",
+	"version": "0.1.1",
+	"publisher": "udayankumar",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/udayankumar/cryptoticker"
+	},
+	"bugs": {
+		"url": "https://github.com/udayankumar/cryptoticker/issues"
+	},
+	"engines": {
+		"vscode": "^1.14.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./out/src/extension",
+	"icon": "assets/icon.jpg",
+	"contributes": {
+		"configuration": {
+			"properties": {
+				"cryptoticker.cryptoSymbols": {
+					"type": "array",
+					"default": [
+						"BTC",
+						"ETH"
+					],
+					"description": "The list of Crypto coin symbols that we want to display"
+				},
+				"cryptoticker.cryptoCurrency": {
+					"type": "string",
+					"default": "USD",
+					"description": "The currency to use for crypto coin prices"
+				},
+				"cryptoticker.cryptoExchange": {
+					"type": "string",
+					"default": "CCCAGG",
+					"description": "The exchange to use for crypto coin prices. Current options BTC38, BTCC, BTCE, BTER, Bit2C, Bitfinex, Bitstamp, Bittrex, CCEDK, Cexio, Coinbase, Coinfloor, Coinse, Coinsetter, Cryptopia, Cryptsy, Gatecoin, Gemini, HitBTC, Huobi, itBit, Kraken, LakeBTC, LocalBitcoins, MonetaGo, OKCoin, Poloniex, Yacuna, Yunbi, Yobit, Korbit, BitBay, BTCMarkets, QuadrigaCX, CoinCheck, BitSquare, Vaultoro, MercadoBitcoin, Unocoin, Bitso, BTCXIndia, Paymium, TheRockTrading, bitFlyer, Quoine, Luno, EtherDelta, Liqui, bitFlyerFX, BitMarket, LiveCoin, Coinone, Tidex, Bleutrade, EthexIndia "
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "tsc -p ./",
+		"compile": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"@types/mocha": "^2.2.32",
+		"@types/node": "^6.0.40",
+		"mocha": "^2.3.3",
+		"typescript": "^2.0.3",
+		"vscode": "^1.1.36"
+	},
+	"__metadata": {
+		"id": "udayankumar.cryptoticker",
+		"publisherId": "udayankumar",
+		"publisherDisplayName": "udayankumar",
+		"installedTimestamp": 1640372829645
+	}
+}

@@ -1,0 +1,68 @@
+{
+	"name": "bitcoinwatcher",
+	"displayName": "bitcoinwatcher",
+	"description": "simple extension that displays the current bitcoin price in the statusbar",
+	"version": "1.0.0",
+	"publisher": "grayoverride",
+	"engines": {
+		"vscode": "^1.11.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:GrayOverride/vscode-bitcoinStatusbar.git"
+	},
+	"licence": "see licence file",
+	"icon": "assets/logo.png",
+	"main": "./out/src/extension",
+	"contributes": {
+		"configuration": {
+			"properties": {
+				"bitcoinwatcher.useRelativeDifference": {
+					"type": "array",
+					"default": [],
+					"description": "display relative difference to current price, if more are defined the average will be calculated"
+				},
+				"bitcoinwatcher.currency": {
+					"type": "string",
+					"default": "usd",
+					"description": "Default bitcoin currency"
+				},
+				"bitcoinwatcher.decimals": {
+					"type": "number",
+					"default": 2,
+					"description": "Number of decimals to be displayed"
+				},
+				"bitcoinwatcher.relativeToYesterday": {
+					"type": "boolean",
+					"default": false,
+					"description": "Show change in value relative to yesterday"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "tsc -p ./",
+		"compile": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"@types/mocha": "^2.2.32",
+		"@types/node": "^6.0.40",
+		"mocha": "^2.3.3",
+		"typescript": "^2.0.3",
+		"vscode": "^1.1.36"
+	},
+	"__metadata": {
+		"id": "grayoverride.bitcoinwatcher",
+		"publisherId": "grayoverride",
+		"publisherDisplayName": "grayoverride",
+		"installedTimestamp": 1640372778332
+	}
+}

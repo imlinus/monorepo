@@ -1,7 +1,7 @@
 {
   "private": true,
   "dependencies": {
-    "types-registry": "^0.1.572"
+    "types-registry": "^0.1.573"
   },
   "devDependencies": {
     "@types/react": "^17.0.38",

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 
-// Import ThirdWeb
+// Import ThirdWebtttsttttsttttttttt
 import { ThirdwebWeb3Provider } from '@3rdweb/hooks';
 
 // Include what chains you wanna support.

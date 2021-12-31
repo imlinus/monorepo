@@ -3,15 +3,18 @@
   "name": "@imlinus/workspaces",
   "scripts": {
     "test": "",
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
     "preinstall": "npx only-allow pnpm",
-    "lint:folders": "folder-lint",
     "remove:node-modules": "npx rimraf ./**/node_modules",
-    "remove:dist": "npx rimraf ./**/dist",
-    "serve:cheatsheets": "docsify serve ./webapps/cheat-sheets",
-    "serve:docs": "docsify serve ./docs"
+    "remove:dist": "npx rimraf ./**/dist"
   },
   "devDependencies": {
-    "@imlinus/git-hooks": "*"
+    "@imlinus/git-hooks": "*",
+    "turbo": "*"
+  },
+  "turbo": {
+    "baseBranch": "origin/main"
   },
   "hooks": {
     "pre-commit": ""

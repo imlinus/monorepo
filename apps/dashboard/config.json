@@ -1,0 +1,70 @@
+{
+  "title": "Dashboard",
+  "items": [{
+    "name": "Network",
+    "items": [{
+      "name": "Portainer",
+      "url": "https://portainer.imlinus.com"
+    }, {
+      "name": "Router",
+      "url": "https://router.imlinus.com"
+    }, {
+      "name": "Speedtest",
+      "url": "https://speedtest.imlinus.com"
+    }]
+  }, {
+    "name": "Developer",
+    "items": [{
+      "name": "Code",
+      "url": "https://code.imlinus.com"
+    },{
+      "name": "Git",
+      "url": "https://git.imlinus.com"
+    }, {
+      "name": "CI",
+      "url": "https://ci.imlinus.com"
+    }, {
+      "name": "Analytics",
+      "url": "https://analytics.imlinus.com"
+    }, {
+      "name": "Status",
+      "url": "https://status.imlinus.com"
+    }]
+  }, {
+    "name": "Google",
+    "items": [{
+      "name": "Search",
+      "url": "https://search.imlinus.com"
+    }, {
+      "name": "YouTube",
+      "url": "https://youtube.imlinus.com"
+    }, {
+      "name": "Drive",
+      "url": "https://cloud.imlinus.com"
+    }, {
+      "name": "Translate",
+      "url": "https://translate.imlinus.com"
+    }, {
+      "name": "Docs",
+      "url": "https://docs.imlinus.com"
+    }, {
+      "name": "Maps",
+      "url": "https://maps.imlinus.com"
+    }]
+  }, {
+    "name": "Entertainment",
+    "items": [{
+      "name": "Browser",
+      "url": "https://browser.imlinus.com"
+    }, {
+      "name": "Movies & TV",
+      "url": "https://play.imlinus.com"
+    }, {
+      "name": "Music",
+      "url": "https://music.imlinus.com"
+    }, {
+      "name": "Books",
+      "url": "https://books.imlinus.com"
+    }]
+  }]
+}

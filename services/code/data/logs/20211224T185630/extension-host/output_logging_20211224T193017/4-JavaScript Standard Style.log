@@ -1,9 +1,0 @@
-[Info  - 7:30:17 PM] JavaScript Standard Style server is running.
-[Info  - 7:30:17 PM] 
-Failed to load the JavaScript Standard Style library for the document /config/workspace/neckbeard/test.js
-
-To use JavaScript Standard Style please install JavaScript Standard Style by running 'npm install standard' in the workspace folder workspace
-or globally using 'npm install -g standard'. You need to reopen the workspace after installing JavaScript Standard Style.
-
-Alternatively you can disable JavaScript Standard Style for the workspace folder workspace by executing the 'Disable JavaScript Standard Style' command.
-[Info  - 7:59:34 PM] JavaScript Standard Style server stopped.

@@ -1,0 +1,12 @@
+{
+  "name": "@imlinus/personal",
+  "version": "0.1.0",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "build": "site-generator"
+  },
+  "dependencies": {
+    "@imlinus/site-generator": "*"
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "name": "@imlinus/git-hooks",
-  "version": "0.1.3",
-  "main": "index.js",
-  "scripts": {
-    "install": "node install.js",
-    "uninstall": "node uninstall.js"
-  }
-}

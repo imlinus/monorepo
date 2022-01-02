@@ -1,31 +1,109 @@
-import { join, basename } from 'path'
-import { readdirSync, readFileSync } from 'fs'
-import markdownParser from '@imlinus/markdown-parser'
-import fs from '@imlinus/markdown-parser'
+import { join } from 'path'
+import fs from 'fs'
 
-export default function SiteGenerator (options) {
-	const root = options.root || process.cwd()
-	const views = options.pages || "views"
-	const pages = options.pages || "pages"
-	const posts = options.posts || "posts"
-	const dist = options.dist || "dist"
-
-	const viewsPath = join(root, views)
-	const viewsFiles = readdirSync(viewsPath)
-
-	console.log("SiteGenerator", options)
-
-	console.log(viewsFiles)
-
-	for (let i = 0; i < viewsFiles.length; i++) {
-		const viewFile = viewsFiles[i]
-
-		const content = readFileSync(join(viewsPath, viewFile), "utf8")
-
-		writeFileSync(join(dist, viewFile + ".html"), markdownParser(content))
-	}
-
-	// const output = readFileSync(new URL('./foo.txt', import.meta.url));
+function logotype (logotype) {
+	return `
+		${logotype.split('!')[0]}
+		${logotype.split('!')[1]}
+	`.trim()
 }
 
+export default class SiteGenerator {
+	constructor (options) {
+		this.rootDir = options.root || process.cwd()
+		this.templateDir = join(this.rootDir, options.templates || 'templates')
+		this.pagesDir = join(this.rootDir, options.pages || 'pages')
+		this.postsDir = join(this.rootDir, options.posts || 'posts')
+		this.distDir = join(this.rootDir, options.dist || 'dist')
 
+		this.init()
+	}
+
+	template (template) {
+		return new Function(
+			'data',
+			'const include = (file, options = {}) => data.include(file + ".tl", Object.assign(data, options)); return `' + template + '`'
+		)
+	}
+
+	markdown (markdown) {
+		return markdown
+			.replace(/!\[(.*?)\]\((.*?)\)/ig, '<img src="$2" alt=\"$1\ />') //images
+			.replace(/\[(.*?)\]\((.*?)\)/ig, '<a href=\"$2\">$1</a>') // links
+			.replace(/\*\*(.*?)\*\*/ig, '<strong>$1</strong>') // bold
+			.replace(/__(.*?)__/ig, '<strong>$1</strong>') // bold
+			.replace(/\*(.*?)\*/ig, '<em>$1</em>') // italics
+			.replace(/_(.*?)_/ig, '<em>$1</em>') // italics
+			.replace(/`(.*?)`/ig, '<code>$1</code>') // code
+			.replace(/~~(.*?)~~/ig, '<del>$1</del>') // strikeThrough
+			.replace(/^\s*#\s+(.*?$)/ig, '<h1>$1</h1>') // h1
+			.replace(/^\s*##\s+(.*?$)/ig, '<h2>$1</h2>') // h2
+			.replace(/^\s*###\s+(.*?$)/ig, '<h3>$1</h3>') // h3
+			.replace(/^\s*####\s+(.*?$)/ig, '<h4>$1</h4>') // h4
+			.replace(/^\s*#####\s+(.*?$)/ig, '<h5>$1</h5>') // h5
+			.replace(/^\s*######\s+(.*?$)/ig, '<h6>$1</h6>') // h6
+	}
+
+	frontMatter (source) {
+		source = source.trim()
+
+		const openRE = new RegExp(`^---`)
+		const closeRE = new RegExp(`---`)
+
+		if (!(openRE.test(source) && closeRE.test(source))) {
+    	return {
+				content: source
+			}
+		}
+
+		function parse (string) {
+			let data = string.split(/\r?\n/)
+			data = data.map(item => item.split(': '))
+
+			return Object.fromEntries(data)
+		}
+
+		const x = openRE.exec(source)
+		const i = x[0].length
+		const y = closeRE.exec(source.substr(i))
+		const j = i + y.index
+		const k = j + y[0].length
+		const front = source.substring(i, j)
+
+		const head = parse(front.trim())
+		const content = source.slice(k).trim()
+
+		return {
+			head,
+			content
+		}
+	}
+
+	parsePages () {
+		const pages = fs.readdirSync(this.pagesDir)
+		const templateContent = fs.readFileSync(join(this.templateDir, 'page.html'), 'utf8')
+	
+		for (let i = 0; i < pages.length; i++) {
+			const page = pages[i]
+			const pageContent = fs.readFileSync(join(this.pagesDir, page), 'utf8')
+
+			const { head, content } = this.frontMatter(pageContent)
+
+			let compile = this.template(templateContent)
+			const outputFile = join(this.distDir, page + '.html')
+
+			fs.writeFileSync(outputFile, compile({
+				title: head.title,
+				logotype: logotype(head.logotype).replace(/(\n)\s+/g, '$1'),
+				content: this.markdown(content)
+			}))
+		}
+	}
+
+	async init () {
+		// Create dist folder
+		await fs.promises.mkdir(this.distDir, { recursive: true })
+
+		this.parsePages()
+	}
+}

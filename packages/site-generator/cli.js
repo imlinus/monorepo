@@ -7,18 +7,16 @@ import color from '@imlinus/color'
 
 const configPath = join(process.cwd(), 'site-generator.config.js')
 
-console.log("process.cwd", process.cwd())
-console.log("configPath", configPath)
-
-readFile(configPath, (error, content) => {
+readFile(configPath, (error) => {
 	if (error !== null) {
-		console.error(color.red('Failed to read configuration file.'))
+		console.error(color.red('Failed to read config'))
     console.error(error)
 	}
 
 	exec('node ' + configPath, (error, stdout) => {
 		if (error !== null) {
-			console.error(color.red('Failed execution of configuration file.'))
+			console.error(color.red('Failed to run config'))
+      console.error(error)
 		}
 
 		console.log(stdout)

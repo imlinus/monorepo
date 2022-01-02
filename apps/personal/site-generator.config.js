@@ -1,9 +1,8 @@
 import SiteGenerator from '@imlinus/site-generator'
 
-SiteGenerator({
+new SiteGenerator({
 	root: "",
 	pages: "pages",
 	posts: "posts",
-	dist: "dist",
-	feed: {}
+	dist: "dist"
 })

@@ -11,9 +11,6 @@
     "site-generator": "cli.js"
   },
   "dependencies": {
-    "@imlinus/color": "*",
-    "@imlinus/fs-utilities": "*",
-    "@imlinus/markdown-parser": "*",
-    "@imlinus/template-engine": "*"
+    "@imlinus/color": "*"
   }
 }

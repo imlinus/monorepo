@@ -1,21 +1,22 @@
-// Prevent script injection, with $${myVariable}
+`site-generator.config.js`
 
-const title = 'The cool people list'
+import SiteGenerator from '@imlinus/site-generator'
 
-const people = [{
-  name: 'John'
-}, {
-  name: 'David'
-}, {
-  name: '<b>Goliath</b>'
-}]
+new SiteGenerator({
+	root: "",
+	pages: "pages",
+	posts: "posts",
+	dist: "dist",
+	feed: {}
+})
 
-const output = html`
-  <h1>${title}</h1>
-  <ul>
-    ${people.map(person => html`
-      <li>$${person.name}</li>
-    `)}
-  </ul>
-`
-console.log(output)
+--
+
+/templates
+  page.html
+  post.html
+/pages
+  index
+  about
+/posts
+  2021-12-31-example

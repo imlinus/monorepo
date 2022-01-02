@@ -1,6 +1,6 @@
 import SiteGenerator from './index.js'
 
-SiteGenerator({
+new SiteGenerator({
 	root: "",
 	pages: "pages",
 	posts: "posts",

@@ -1,20 +1,14 @@
 {
-  "private": true,
   "name": "@imlinus/workspaces",
+  "license": "0BSD",
   "scripts": {
     "test": "",
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
     "preinstall": "npx only-allow pnpm",
     "remove:node-modules": "npx rimraf ./**/node_modules",
     "remove:dist": "npx rimraf ./**/dist"
   },
   "devDependencies": {
-    "@imlinus/git-hooks": "*",
-    "turbo": "*"
-  },
-  "turbo": {
-    "baseBranch": "origin/main"
+    "@imlinus/git-hooks": "*"
   },
   "hooks": {
     "pre-commit": ""

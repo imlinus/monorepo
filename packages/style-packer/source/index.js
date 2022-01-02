@@ -1,5 +1,5 @@
-const path = require('path')
-const fs = require('fs')
+import path from 'path'
+import fs from 'fs'
 
 function readAndBundle (options) {
   options.bundled = options.bundled || ''
@@ -128,11 +128,9 @@ function pack (entryFile) {
   }).trim()
 }
 
-function stylepacker (file) {
+export default function stylepacker (file) {
   let packed = pack(file)
-  let style = modify(packed)
+  // let style = modify(packed)
 
-  return style
+  return packed
 }
-
-module.exports = stylepacker

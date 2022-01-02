@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "0BSD",
   "scripts": {
-    "install": "node install.js",
-    "uninstall": "node uninstall.js"
+    "install": "node source/install.js",
+    "uninstall": "node source/uninstall.js"
   }
 }

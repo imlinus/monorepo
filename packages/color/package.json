@@ -2,7 +2,6 @@
   "name": "@imlinus/color",
   "version": "0.1.4",
   "type": "module",
-  "main": "index.js",
+  "main": "source/index.js",
   "license": "0BSD"
 }
-

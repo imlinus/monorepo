@@ -1,6 +1,6 @@
 {
   "name": "@imlinus/http-server",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "source/index.js",
   "type": "module"
 }

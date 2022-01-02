@@ -1,14 +1,11 @@
 {
   "name": "@imlinus/site-generator",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "source/index.js",
   "type": "module",
   "license": "0BSD",
-  "scripts": {
-    "test": "node cli.js"
-  },
   "bin": {
-    "site-generator": "cli.js"
+    "site-generator": "source/cli.js"
   },
   "dependencies": {
     "@imlinus/color": "*"

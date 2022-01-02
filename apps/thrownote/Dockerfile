@@ -14,10 +14,8 @@ RUN pnpm install --offline
 
 ## This is ugly, but I'm having insane problems with symlinked crap
 ## And yeah.. I don't wanna spend another week on f*ckin docker
-WORKDIR /root/monorepo/webapps/thrownote
-
-
+WORKDIR /root/monorepo/apps/thrownote
 
 # FROM dev
 # WORKDIR /root/app
-# COPY --from=dev /root/monorepo/webapps/thrownote ./
+# COPY --from=dev /root/monorepo/apps/thrownote ./

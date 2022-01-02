@@ -1,8 +1,0 @@
-{
-  "name": "@imlinus/stylepacker",
-  "version": "0.1.0",
-  "main": "index.js",
-  "bin": {
-    "stylepacker": "cli.js"
-  }
-}

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const fs = require('fs')
-const path = require('path')
-const stylepacker = require('./index')
+import fs from 'fs'
+import path from 'path'
+import stylepacker from './index.js'
 
 let input
 let output
@@ -23,8 +23,7 @@ process.argv.forEach(value => {
 })
 
 if (!input || !output) {
-  console.log('Sorry, you didnt provide input or output file')
-  return
+  throw new Error('Sorry, you didnt provide input or output file')
 }
 
 function pack () {

@@ -1,0 +1,10 @@
+{
+  "name": "@imlinus/style-packer",
+  "version": "0.1.0",
+  "main": "source/index.js",
+  "type": "module",
+  "license": "0BSD",
+  "bin": {
+    "style-packer": "source/cli.js"
+  }
+}

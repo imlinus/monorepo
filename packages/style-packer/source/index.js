@@ -3,10 +3,14 @@ import fs from 'fs'
 import color from '@imlinus/color'
 
 export default class StylePacker {
-	constructor (options) {
-		this.rootDir = options.root || process.cwd()
-		this.input = path.join(this.rootDir, options.input || 'source/stylesheet.css')
-		this.output = path.join(this.rootDir, options.output || 'build/stylesheet.css')
+	constructor ({
+		root, // string
+		input, // string
+		output // string
+	}) {
+		this.root = root || process.cwd()
+		this.input = path.join(this.root, input || 'source/stylesheet.css')
+		this.output = path.join(this.root, output || 'build/stylesheet.css')
 
 		this.init()
   }
@@ -72,7 +76,7 @@ export default class StylePacker {
 }
 
 
-// function modify (nestled) {
+// function parseNestled (nestled) {
 //   const tokens = []
 //   const quotes = []
 //   const quoteToken = ':Q=' + (Math.random() + '=Q:').substr(2)

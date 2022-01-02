@@ -1,0 +1,81 @@
+█▀▄▀█ █▀█ █▀▄ █▀█ █▀▄ █▀█ █▀▄ █▀█
+█ ▀ █ █▄█ █ █ █▄█ █▀▄ █▄▄ █▀  █▄█
+
+Here you'll find most of my homelab and its utilities
+
+
+INFRASTRUCTURE
+╔═══════════════╤═══════════════════════════════╗
+║ Type          │ Package      Subdomain   Port ║
+╟───────────────┼───────────────────────────────╢
+║ Reverse Proxy │ Caddy                         ║
+║ Containers    │ Portainer    portainer   9000 ║
+║ VPN           │ WireGuard    vpn              ║
+║ Dashboard     │ dashboard    dashboard        ║
+╚═══════════════╧═══════════════════════════════╝
+
+
+DEVELOPER
+╔═════════════╤═════════════════════════════════╗
+║ Type        │ Package        Subdomain   Port ║
+╟─────────────┼─────────────────────────────────╢
+║ Text editor │ Code server    code             ║
+║ Git         │ Gitea          git              ║
+║ CI          │ Abstruse       ci               ║
+║ Pastebin    │ ??             paste            ║
+║ Analytics   │ Ackee          analytics        ║
+╚═════════════╧═════════════════════════════════╝
+
+
+CLOUD
+╔════════════╤══════════════════════════════════╗
+║ Type       │ Package         Subdomain   Port ║
+╟────────────┼──────────────────────────────────╢
+║ Files      │ Nextcloud       files            ║
+║ Docs       │ Etherpad-lite   docs             ║
+║ Sheets     │ Sheetjs         sheets           ║
+╚════════════╧══════════════════════════════════╝
+
+
+GOOGLE REPLACEMENTS
+╔════════════╤══════════════════════════════════╗
+║ Type       │ Package         Subdomain   Port ║
+╟────────────┼──────────────────────────────────╢
+║ Search     │ Nextcloud       search           ║
+║ Maps       │ Benmaps         maps             ║
+║ Translate  │ LibreTranslate  translate        ║
+╚════════════╧══════════════════════════════════╝
+
+
+ENTERTAINMENT
+╔════════════╤══════════════════════════════════╗
+║ Type       │ Package         Subdomain   Port ║
+╟────────────┼──────────────────────────────────╢
+║ Play       │ Jellyfin        play        8096 ║
+║ Music      │ Cardinal        music       3080 ║
+║ Books      │ Kavita          books            ║
+║ YouTube    │ Invidious       youtube          ║
+║ Reddit     │ LibReddit       reddit           ║
+║ Gaming     │ Rainway*        gaming           ║
+║ Browser    │ Neko            browser          ║
+╚════════════╧══════════════════════════════════╝
+* proprietary software
+
+
+TOOLS
+╔════════════╤══════════════════════════════════╗
+║ Type       │ Package         Subdomain   Port ║
+╟────────────┼──────────────────────────────────╢
+║ Speedtest  │ LibreSpeed      speedtest        ║
+║ Thrownote  │ thrownote       thrownote        ║
+║ PDF editor │ pdf-editor      pdf-editor       ║
+╚════════════╧══════════════════════════════════╝
+
+
+OTHER
+╔════════════╤══════════════════════════════════╗
+║ Type       │ Package         Subdomain   Port ║
+╟────────────┼──────────────────────────────────╢
+║ Wikipedia  │ Kiwix           wikipedia        ║
+╚════════════╧══════════════════════════════════╝
+

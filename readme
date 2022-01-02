@@ -1,59 +1,25 @@
 █▀▄▀█ █▀█ █▀▄ █▀█ █▀▄ █▀█ █▀▄ █▀█
 █ ▀ █ █▄█ █ █ █▄█ █▀▄ █▄▄ █▀  █▄█
-________________________________________________________________________
 
 Here you'll find most of my homelab and its utilities
 
+Apps
+╔═══════════════╤════════════╗
+║ Type          │ Subdomain  ║
+╟───────────────┼────────────╢
+║ Personal      │ www        ║
+║ Authenticator │ 2fa        ║
+║ Dashboard     │ dashboard  ║
+║ Fonts         │ fonts      ║
+║ Thrownote     │ thrownote  ║
+╚═══════════════╧════════════╝
 
-INFRASTRUCTURE
-╔═══════════════╤══════════════════════════════╗
-║ Type          │ Package     Subdomain   Port ║
-╟───────────────┼──────────────────────────────╢
-║ Reverse Proxy │ Caddy                        ║
-║ Containers    │ Portainer   portainer   9000 ║
-║ VPN           │ WireGuard   vpn              ║
-║ Dashboard     │             dashboard        ║
-╚═══════════════╧══════════════════════════════╝
+Third-party
+╔═══════════════╤═══════════════════════════════╗
+║ Type          │ Package      Subdomain   Port ║
+╟───────────────┼───────────────────────────────╢
+║ CI            │ Abstruse     ci          8090 ║
+║ Portainer     │ Portainer    portainer   9000 ║
+║ Docs          │ Etherpad     docs        9010 ║
+╚═══════════════╧═══════════════════════════════╝
 
-DEVELOPMENT
-╔═════════════╤════════════════════════════════╗
-║ Type        │ Package       Subdomain   Port ║
-╟─────────────┼────────────────────────────────╢
-║ Text editor │ Code server   code             ║
-║ Git         │ Gitea         git              ║
-║ CI          │ Abstruse      ci               ║
-║ Pastebin    │ ??                             ║
-║ Analytics   │ Ackee         analytics        ║
-╚═════════════╧════════════════════════════════╝
-
-ENTERTAINMENT
-╔════════════╤══════════════════════════════╗
-║ Type       │ Package     Subdomain   Port ║
-╟────────────┼──────────────────────────────╢
-║ Play       │ Jellyfin    play        8096 ║
-║ Music      │ Cardinal    music       3080 ║
-║ Books      │ Kavita      books            ║
-║ YouTube    │ Invidius    youtube          ║
-║ Reddit     │ LibReddit   reddit           ║
-║ Gaming     │ Rainway*    gaming           ║
-║ Browser    │ Neko        browser          ║
-╚════════════╧══════════════════════════════╝
-
-
-  +---------------+----------------+------------+------+
-  | Search        | Searx          | search.    |      |
-  | Maps          | Benmaps        | maps.      |      |
-  | Files         | Nextcloud      | cloud.     |      |
-  | Docs          | Etherpad-lite  | docs.      |      |
-  | Sheets        | Sheetjs        | sheets.    |      |
-  | Wikipedia     | Kiwix          | wikipedia. |      |
-  +---------------+----------------+------------+------+
-  |                     TOOLS                          |
-  +---------------+----------------+------------+------+
-  | Translate     | LibreTranslate | translate. |      |
-  | Speedtest     | LibreSpeed     | speedtest. |      |
-  | Thrownote     | apps/thrownote | thrownote. |      |
-   pdf-editor
-  +---------------+----------------+------------+------+
-
-* proprietary software

@@ -11,12 +11,30 @@ function logotype (logotype) {
 export default class SiteGenerator {
 	constructor (options) {
 		this.rootDir = options.root || process.cwd()
+		this.styleDir = join(this.rootDir, options.style || 'css')
 		this.templateDir = join(this.rootDir, options.templates || 'templates')
 		this.pagesDir = join(this.rootDir, options.pages || 'pages')
 		this.postsDir = join(this.rootDir, options.posts || 'posts')
-		this.distDir = join(this.rootDir, options.dist || 'dist')
+		this.distDir = join(process.cwd(), options.dist || 'dist')
 
 		this.init()
+	}
+
+	copyStyle () {
+		async function copyFolderSync (from, to) {
+			// fs.mkdirSync(to)
+			await fs.promises.mkdir(to, { recursive: true })
+
+			fs.readdirSync(from).forEach(element => {
+				if (fs.lstatSync(join(from, element)).isFile()) {
+					fs.copyFileSync(join(from, element), join(to, element))
+				} else {
+					copyFolderSync(join(from, element), join(to, element))
+				}
+			})
+		}
+
+		copyFolderSync(this.styleDir, join(this.distDir, "/css"))
 	}
 
 	template (template) {
@@ -104,6 +122,7 @@ export default class SiteGenerator {
 		// Create dist folder
 		await fs.promises.mkdir(this.distDir, { recursive: true })
 
+		this.copyStyle()
 		this.parsePages()
 	}
 }

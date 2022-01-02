@@ -1,7 +1,15 @@
 I love SCSS, but these days most of the good parts are built-in
 However, I still want to bundle my files and write nestled styles
 
-style-packer --input=test/style.css --output=dist/style.css
+style-packer.config.js
 
-Optionally add
---watch
+```
+import StylePacker from '@imlinus/style-packer'
+
+new StylePacker({
+	input: 'source/stylesheet.css',
+	output: 'build/stylesheet.css'
+})
+```
+
+See packages/stylesheet for an example

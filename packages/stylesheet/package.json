@@ -1,10 +1,12 @@
 {
   "name": "@imlinus/stylesheet",
-  "main": "dist/stylesheet.css",
   "version": "0.1.0",
+  "main": "dist/stylesheet.css",
+  "type": "module",
+  "license": "0BSD",
   "scripts": {
-    "build": "style-packer --input=source/style.css --output=source/stylesheet.css",
-    "watch": "style-packer --input=source/style.css --output=source/stylesheet.css --watch"
+    "build": "style-packer",
+    "watch": "style-packer --watch"
   },
   "dependencies": {
     "@imlinus/style-packer": "*"

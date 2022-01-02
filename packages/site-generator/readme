@@ -1,5 +1,10 @@
-`site-generator.config.js`
+Just a basic no-thrills site-generator.
+It will take "MD-flavored" files and make them in to simple HTML
 
+
+site-generator.config.js
+
+```
 import SiteGenerator from '@imlinus/site-generator'
 
 new SiteGenerator({
@@ -9,9 +14,11 @@ new SiteGenerator({
 	dist: "dist",
 	feed: {}
 })
+```
 
---
+Basic structure
 
+```
 /templates
   page.html
   post.html
@@ -20,3 +27,6 @@ new SiteGenerator({
   about
 /posts
   2021-12-31-example
+```
+
+See apps/personal for an example

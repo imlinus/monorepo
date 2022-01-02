@@ -1,7 +1,7 @@
 {
   "name": "@imlinus/git-hooks",
-  "version": "0.1.0",
-  "main": "index.js",
+  "version": "0.1.1",
+  "type": "module",
   "license": "0BSD",
   "scripts": {
     "install": "node source/install.js",

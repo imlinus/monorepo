@@ -6,5 +6,8 @@
   "license": "0BSD",
   "bin": {
     "style-packer": "source/cli.js"
+  },
+  "dependencies": {
+    "@imlinus/color": "*"
   }
 }

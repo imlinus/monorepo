@@ -1,0 +1,8 @@
+fs.mkdirParent(path.dirname(destination), function (err) {
+  if (err && err.code != 'EEXIST') {
+    next(err)
+    return
+  }
+
+  next()
+})

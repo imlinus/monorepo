@@ -2,6 +2,7 @@
   "name": "@imlinus/git-hooks",
   "version": "0.1.0",
   "main": "index.js",
+  "license": "0BSD",
   "scripts": {
     "install": "node install.js",
     "uninstall": "node uninstall.js"

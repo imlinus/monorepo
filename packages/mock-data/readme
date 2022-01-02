@@ -1,8 +1,6 @@
-```js
 import mock from '@imlinus/mock-data'
 
 const random = mock.random()
-
 console.log(random)
 
 // Will generate:
@@ -13,16 +11,14 @@ console.log(random)
 //   email: 'christian_brown@yahoo.com',
 //   password: 'T@Ny5zjsTU'
 // }
-```
 
-### API
-```js
+// API
 const gender = mock.maleOrFemale()
 const name = mock.name(gender)
 const lastName = mock.lastName()
-const email = mock.email(firstName, surName)
+const email = mock.email(firstName, lastName)
 const password = mock.password()
 
 // or if you want em' all
 const random = mock.random()
-```
+

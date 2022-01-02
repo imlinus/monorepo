@@ -1,0 +1,19 @@
+{
+  "name": "@imlinus/site-generator",
+  "version": "0.1.0",
+  "main": "index.js",
+  "type": "module",
+  "license": "0BSD",
+  "scripts": {
+    "test": "node cli.js"
+  },
+  "bin": {
+    "site-generator": "cli.js"
+  },
+  "dependencies": {
+    "@imlinus/color": "*",
+    "@imlinus/fs-utilities": "*",
+    "@imlinus/markdown-parser": "*",
+    "@imlinus/template-engine": "*"
+  }
+}

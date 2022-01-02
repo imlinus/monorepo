@@ -6,9 +6,6 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@imlinus/component": "*",
-    "@imlinus/http-server": "*",
-    "buble": "^0.20.0",
-    "parcel": "^2.0.1"
+    "@imlinus/http-server": "*"
   }
 }

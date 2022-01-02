@@ -1,0 +1,21 @@
+// Prevent script injection, with $${myVariable}
+
+const title = 'The cool people list'
+
+const people = [{
+  name: 'John'
+}, {
+  name: 'David'
+}, {
+  name: '<b>Goliath</b>'
+}]
+
+const output = html`
+  <h1>${title}</h1>
+  <ul>
+    ${people.map(person => html`
+      <li>$${person.name}</li>
+    `)}
+  </ul>
+`
+console.log(output)

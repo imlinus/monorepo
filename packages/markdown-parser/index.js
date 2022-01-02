@@ -1,7 +1,7 @@
 export default function markdownParser (markdown) {
   return markdown
-    .replace(/!\[(.*?)\]\((.*?)\)/ig, '<img src=\'$2\' alt=\'$1\'</img>') //images
-    .replace(/\[(.*?)\]\((.*?)\)/ig, '<a href=\'$2\'>$1</a>') // links
+    .replace(/!\[(.*?)\]\((.*?)\)/ig, '<img src=\"$2\" alt=\"$1\ />') //images
+    .replace(/\[(.*?)\]\((.*?)\)/ig, '<a href=\"$2\">$1</a>') // links
     .replace(/\*\*(.*?)\*\*/ig, '<strong>$1</strong>') // bold
     .replace(/__(.*?)__/ig, '<strong>$1</strong>') //bold
     .replace(/\*(.*?)\*/ig, '<em>$1</em>') // italics

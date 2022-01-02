@@ -1,0 +1,16 @@
+import color from '@imlinus/color'
+
+// Methods
+color.inverse('Hello, World.')
+color.white('Hello, World.')
+color.grey('Hello, World.')
+color.blue('Hello, World.')
+color.cyan('Hello, World.')
+color.green('Hello, World.')
+color.magenta('Hello, World.')
+color.red('Hello, World.')
+color.yellow('Hello, World.')
+
+color.success('Hello, World.')
+color.warning('Hello, World.')
+color.error('Hello, World.')

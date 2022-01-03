@@ -1,0 +1,9 @@
+import date from '@imlinus/date'
+
+const current = date('{HH}:{mm}:{ss}')
+const unix = date('{unix}')
+
+console.log({
+  current: current(),
+  unix: unix()
+})

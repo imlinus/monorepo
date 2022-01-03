@@ -1,5 +1,3 @@
-
-```js
 import Server from '@imlinus/http-server'
 const server = new Server()
 
@@ -8,4 +6,3 @@ server.get('/', (request, response) => {
 })
 
 server.listen(1337)
-```

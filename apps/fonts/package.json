@@ -1,0 +1,12 @@
+{
+  "name": "@imlinus/fonts",
+  "version": "0.1.0",
+  "main": "source/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node source/index.js"
+  },
+  "dependencies": {
+    "@imlinus/http-server": "*"
+  }
+}

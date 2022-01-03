@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
 
-.tags .tag {
-  margin: 0 calc(var(--gap) / 2) var(--gap) 0;
+  .tag {
+    margin: 0 calc(var(--gap) / 2) var(--gap) 0;
+  }
 }
 
 .tag {
@@ -16,43 +16,42 @@
   border-radius: 0.25rem;
   color: var(--dark);
   background: var(--default);
-}
 
-.tag.is-primary {
-  color: var(--white);
-  background: var(--primary);
-}
+  &.is-primary {
+    color: var(--white);
+    background: var(--primary);
+  }
 
-.tag.is-secondary {
-  color: var(--white);
-  background: var(--secondary);
-}
+  &.is-secondary {
+    color: var(--white);
+    background: var(--secondary);
+  }
 
-.tag.is-info {
-  color: var(--white);
-  background: var(--info);
-}
+  &.is-info {
+    color: var(--white);
+    background: var(--info);
+  }
 
-.tag.is-success {
-  color: var(--white);
-  background: var(--success);
-}
+  &.is-success {
+    color: var(--white);
+    background: var(--success);
+  }
+  &.is-warning {
+    color: var(--white);
+    background: var(--warning);
+  }
 
-.tag.is-warning {
-  color: var(--white);
-  background: var(--warning);
-}
+  &.is-danger {
+    color: var(--white);
+    background: var(--danger);
+  }
 
-.tag.is-danger {
-  color: var(--white);
-  background: var(--danger);
-}
+  &.is-black {
+    color: var(--white);
+    background: var(--black);
+  }
 
-.tag.is-black {
-  color: var(--white);
-  background: var(--black);
-}
-
-.tag.is-white {
-  background: var(--white);
+  &.is-white {
+    background: var(--white);
+  }
 }

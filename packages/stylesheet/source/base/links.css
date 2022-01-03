@@ -1,10 +1,15 @@
-a, a:visited {
+a {
   color: var(--link-color);
   text-decoration: none;
-}
 
-a:hover {
-  cursor: pointer;
-  color: var(--link-hover-color);
-  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+    color: var(--link-hover-color) !important;
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: var(--link-color);
+    text-decoration: none;
+  }
 }

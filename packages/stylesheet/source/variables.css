@@ -2,28 +2,33 @@
 :root {
   --default: #dbdbdb;
   --default-accent: #363636;
+
   --primary: #0fb9b1;
   --primary-accent: #2bcbba;
+
   --secondary: #8854d0;
   --secondary-accent: #a55eea;
+
   --info: #2d98da;
   --info-accent: #45aaf2;
+
   --link: #3867d6;
   --link-accent: #4b7bec;
+
   --success: #20bf6b;
   --success-accent: #26de81;
+
   --warning: #f7b731;
   --warning-accent: #fed330;
+
   --danger: #eb3b5a;
   --danger-accent: #fc5c65;
+
   --light: #f5f6fa;
   --light-accent: #dcdde1;
+
   --dark: #2c2c54;
   --dark-accent: #40407a;
-  --black: #111;
-  --black-accent: #000;
-  --white: #FFF;
-  --white-accent: #EEE;
 }
 
 /* Typography */
@@ -70,14 +75,6 @@
   --main-color: var(--dark-accent);
   --link-color: var(--link);
   --link-hover-color: var(--link-accent);
-
-  --topbar-bg: var(--primary);
-  --topbar-bg-accent: var(--primary-accent);
-  --footer-background: var(--light-accent);
-  --box-background: var(--white);
-  --card-background: var(--white);
-  --card-footer-background: var(--light);
-  --modal-bg: var(--white-accent);
 }
 
 [theme='dark'] {
@@ -88,17 +85,4 @@
   --main-color: var(--light);
   --link-color: var(--primary);
   --link-hover-color: var(--primary-accent);
-
-  --topbar-bg: var(--primary);
-  --topbar-bg-accent: var(--primary-accent);
-  --footer-background: var(--dark-accent);
-  --box-background: var(--dark-accent);
-  --card-background: var(--dark-accent);
-  --card-footer-background: var(--dark);
-  --modal-bg: var(--dark-accent);
-}
-
-:root {
-  --topbar-height: 6rem;
-  --sidebar-width: 17.5rem;
 }

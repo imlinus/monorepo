@@ -14,6 +14,14 @@ importers:
     dependencies:
       '@imlinus/http-server': link:../../packages/http-server
 
+  apps/css:
+    specifiers:
+      '@imlinus/http-server': '*'
+      '@imlinus/stylesheet': '*'
+    dependencies:
+      '@imlinus/http-server': link:../../packages/http-server
+      '@imlinus/stylesheet': link:../../packages/stylesheet
+
   apps/dashboard:
     specifiers:
       '@imlinus/site-generator': '*'
@@ -63,6 +71,9 @@ importers:
     specifiers: {}
 
   packages/js-utilities:
+    specifiers: {}
+
+  packages/json-database:
     specifiers: {}
 
   packages/mock-data:

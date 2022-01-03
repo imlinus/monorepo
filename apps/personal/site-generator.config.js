@@ -5,5 +5,5 @@ new SiteGenerator({
 	style: 'css',
 	pages: 'pages',
 	posts: 'posts',
-	dist: 'dist'
+	build: 'build'
 })

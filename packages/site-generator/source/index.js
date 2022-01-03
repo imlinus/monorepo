@@ -15,7 +15,7 @@ export default class SiteGenerator {
 		this.templateDir = join(this.rootDir, options.templates || 'templates')
 		this.pagesDir = join(this.rootDir, options.pages || 'pages')
 		this.postsDir = join(this.rootDir, options.posts || 'posts')
-		this.distDir = join(process.cwd(), options.dist || 'dist')
+		this.buildDir = join(process.cwd(), options.build || 'build')
 
 		this.init()
 	}
@@ -108,7 +108,7 @@ export default class SiteGenerator {
 			const { head, content } = this.frontMatter(pageContent)
 
 			let compile = this.template(templateContent)
-			const outputFile = join(this.distDir, page + '.html')
+			const outputFile = join(this.buildDir, page + '.html')
 
 			fs.writeFileSync(outputFile, compile({
 				title: head.title,
@@ -119,8 +119,8 @@ export default class SiteGenerator {
 	}
 
 	async init () {
-		// Create dist folder
-		await fs.promises.mkdir(this.distDir, { recursive: true })
+		// Create build folder
+		await fs.promises.mkdir(this.buildDir, { recursive: true })
 
 		this.copyStyle()
 		this.parsePages()

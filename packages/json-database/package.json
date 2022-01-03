@@ -1,0 +1,6 @@
+{
+  "name": "@imlinus/json-database",
+  "version": "0.1.0",
+  "main": "source/index.js",
+  "type": "module"
+}

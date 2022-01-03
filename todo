@@ -1,0 +1,26 @@
+Priority, kind of
+[-] (build and host) web font self-host
+    - http-server is blocking
+
+[-] Test "convert nestled" in style-packer
+[-] Build json-database
+[-] Host the css framework
+[-] Build git repos api/app (no dependencies!)
+
+
+https://github.com/lrlna/pgp-encrypt-content
+https://github.com/N0MoreSecr3ts/wraith
+
+IDEA:
+- PGP encrypted config files that encrypt/decrypt on push/pull (using git hooks)
+
+teamsecrets.config.js
+
+TeamSecrets({
+  input: "config.json",
+  output: "config.pgp",
+  allowed: ["mail@imlinus.com"]
+})
+
+check if user is in the allowed list,
+then go ahead and ask them to unlock it

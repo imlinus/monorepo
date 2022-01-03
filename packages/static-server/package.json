@@ -1,0 +1,6 @@
+{
+  "name": "@imlinus/static-server",
+  "version": "0.1.0",
+  "main": "source/index.js",
+  "type": "module"
+}

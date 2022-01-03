@@ -1,0 +1,7 @@
+{
+  "name": "@imlinus/uuid",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "source/index.js",
+  "license": "0BSD"
+}

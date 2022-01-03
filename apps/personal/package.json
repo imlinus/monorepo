@@ -4,9 +4,11 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
+    "start": "node server.js",
     "build": "site-generator"
   },
   "dependencies": {
+    "@imlinus/http-server": "*",
     "@imlinus/site-generator": "*"
   }
 }

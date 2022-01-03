@@ -8,9 +8,10 @@
   height: 100%;
 }
 
+/* chrome input background fix */
 input:-webkit-autofill {
-  background-color: #FFF !important;
-  box-shadow: 0 0 0 1000px #FFF inset !important;
+  background-color: #fff !important;
+  box-shadow: 0 0 0 1000px #fff inset !important;
 }
 
 hr {

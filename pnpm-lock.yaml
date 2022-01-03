@@ -1,0 +1,84 @@
+lockfileVersion: 5.3
+
+importers:
+
+  .:
+    specifiers:
+      '@imlinus/git-hooks': '*'
+    devDependencies:
+      '@imlinus/git-hooks': link:packages/git-hooks
+
+  apps/authenticator:
+    specifiers:
+      '@imlinus/http-server': '*'
+    dependencies:
+      '@imlinus/http-server': link:../../packages/http-server
+
+  apps/dashboard:
+    specifiers:
+      '@imlinus/site-generator': '*'
+    dependencies:
+      '@imlinus/site-generator': link:../../packages/site-generator
+
+  apps/personal:
+    specifiers:
+      '@imlinus/site-generator': '*'
+    dependencies:
+      '@imlinus/site-generator': link:../../packages/site-generator
+
+  apps/thrownote:
+    specifiers:
+      '@imlinus/http-server': '*'
+    dependencies:
+      '@imlinus/http-server': link:../../packages/http-server
+
+  packages/color:
+    specifiers: {}
+
+  packages/date:
+    specifiers: {}
+
+  packages/fs-utilities:
+    specifiers: {}
+
+  packages/git-hooks:
+    specifiers: {}
+
+  packages/http-server:
+    specifiers: {}
+
+  packages/is-port-available:
+    specifiers: {}
+
+  packages/js-utilities:
+    specifiers: {}
+
+  packages/json-database:
+    specifiers: {}
+
+  packages/mock-data:
+    specifiers: {}
+
+  packages/site-generator:
+    specifiers:
+      '@imlinus/color': '*'
+    dependencies:
+      '@imlinus/color': link:../color
+
+  packages/static-server:
+    specifiers: {}
+
+  packages/style-packer:
+    specifiers:
+      '@imlinus/color': '*'
+    dependencies:
+      '@imlinus/color': link:../color
+
+  packages/stylesheet:
+    specifiers:
+      '@imlinus/style-packer': '*'
+    dependencies:
+      '@imlinus/style-packer': link:../style-packer
+
+  packages/uuid:
+    specifiers: {}

@@ -6,12 +6,8 @@
 @import "./base/lists.css";
 @import "./base/typography.css";
 
-@import "./layout/topbar.css";
-@import "./layout/nav.css";
-@import "./layout/wrapper.css";
 @import "./layout/container.css";
 @import "./layout/columns.css";
-@import "./layout/footer.css";
 
 @import "./elements/buttons.css";
 @import "./elements/code.css";

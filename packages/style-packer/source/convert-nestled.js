@@ -42,7 +42,7 @@ export default function convertNestled (nestled) {
             const parts = /^([^{]+){([\s\S]*)}$/.exec(atRule)
 
             if (parts && /^\s*@(media|supports|document)/.test(parts[0])) {
-              atRule = parts[1] + '{' + convertNcssTextToCss(parts[2]).replace(/\n/g, ' ') + ' }'
+              atRule = parts[1] + '{' + convertNestled(parts[2]).replace(/\n/g, ' ') + ' }'
             }
 
             rules.push([[], [atRule.replace(/ *\n */g, ' ')]])

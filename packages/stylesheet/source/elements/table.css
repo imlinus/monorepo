@@ -5,14 +5,14 @@ table {
   border-spacing: 0;
   text-align: left;
   margin-bottom: var(--gap);
-}
 
-table th,
-table td {
-  vertical-align: middle;
-  padding: calc(var(--gap) / 4) calc(var(--gap) / 4);
-}
+  th,
+  td {
+    vertical-align: middle;
+    padding: calc(var(--gap) / 4) calc(var(--gap) / 4);
+  }
 
-table thead {
-  border-bottom: 0.0625rem solid currentColor;
+  thead {
+    border-bottom: 0.0625rem solid currentColor;
+  }
 }

@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs'
 import color from '@imlinus/color'
-import convertNestled from './convert-nestled'
+import convertNestled from './convert-nestled.js'
 
 export default class StylePacker {
 	constructor ({
@@ -26,8 +26,6 @@ export default class StylePacker {
 
 		const filePath = path.join(relative, path.basename(file))
 
-		console.log(color.blue(path.basename(filePath)))
-
 		if (included.includes(filePath)) {
 			return bundled
 		}
@@ -35,7 +33,6 @@ export default class StylePacker {
 		included.push(filePath)
 
 		let content = fs.readFileSync(filePath, 'utf8')
-
 		const matches = content.matchAll(/^\s*@import\s+"(.*)";\s*$/mg)
 
 		for (const match of matches) {
@@ -66,14 +63,17 @@ export default class StylePacker {
 		}).trim()
 	}
 
-	init () {
+	async init () {
+		console.log(path.dirname(this.output))
+		// Create build folder
+		await fs.promises.mkdir(path.dirname(this.output), { recursive: true })
+
 		console.log(color.green('Style Packer'))
 
-		let packed = this.pack()
+		const packed = this.pack()
+		const stylesheet = convertNestled(packed).trim()
 
-		// const stylesheet = convertNestled(packed)
-
-		fs.writeFileSync(this.output, packed)
+		fs.writeFileSync(this.output, stylesheet)
     console.log(color.green('Written to:'), this.output)
 	}
 }

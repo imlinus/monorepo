@@ -1,0 +1,15 @@
+Check if port is available, otherwise suggest nearby
+
+```js
+import isPortAvailable from '@imlinus/isPortAvailable'
+import http from 'http'
+
+class Server {
+  constructor () {}
+
+  async init (port = 1337) {
+    const availablePort = await isPortAvailable(port)
+    http.listen(availablePort)
+  }
+}
+```

@@ -1,0 +1,31 @@
+
+```js
+const db = require('octo-db')
+
+db.setup({
+  file: 'path/to/my/file-db.json'
+})
+
+const result = await db.insert({
+  email: 'peter.smith@test.com',
+  firstName: 'Peter',
+  lastName: 'Smith',
+  phone: '0412345678'
+})
+
+const query = await db.query({
+  email: 'peter.smith@test.com'
+})
+
+const remove = await db.remove({
+  email: 'peter.smith@test.com'
+})
+
+await db.flush()
+
+const update = await db.update({
+  email: 'peter.smith@test.com'
+}, {
+  email: 'peter.smith@gmail.com'
+})
+```

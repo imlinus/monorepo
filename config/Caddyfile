@@ -1,6 +1,7 @@
 # -----------
-# Services (Third-party)
+# Third-party
 # -----------
+
 ci.imlinus.com {
   reverse_proxy localhost:1200
 }
@@ -13,48 +14,35 @@ docs.imlinus.com {
   reverse_proxy localhost:1202
 }
 
-play.imlinus.com {
-  reverse_proxy 85.24.178.218:8096
-}
-
 portainer.imlinus.com {
   reverse_proxy localhost:1203
 }
 
+
 # -------
 # Webapps
 # -------
-authenticator.imlinus.com {
+
+2fa.imlinus.com {
   reverse_proxy localhost:1300
 }
 
-cheatsheets.imlinus.com {
-  reverse_proxy localhost:1301
-}
-
-dashboard.imlinus.com {
+css.imlinus.com {
   reverse_proxy localhost:1302
 }
 
-fonts.imlinus.com {
+dashboard.imlinus.com {
   reverse_proxy localhost:1303
 }
 
-notes.imlinus.com {
+fonts.imlinus.com {
   reverse_proxy localhost:1304
 }
 
-personal.imlinus.com {
+imlinus.com {
   reverse_proxy localhost:1305
 }
 
 thrownote.imlinus.com {
   reverse_proxy localhost:1306
-}
-
-# -----
-# Games
-# -----
-csgo.imlinus.com {
-  reverse_proxy localhost:27015
 }

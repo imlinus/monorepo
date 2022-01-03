@@ -20,6 +20,12 @@ importers:
     dependencies:
       '@imlinus/site-generator': link:../../packages/site-generator
 
+  apps/fonts:
+    specifiers:
+      '@imlinus/http-server': '*'
+    dependencies:
+      '@imlinus/http-server': link:../../packages/http-server
+
   apps/personal:
     specifiers:
       '@imlinus/site-generator': '*'
@@ -35,6 +41,9 @@ importers:
   packages/color:
     specifiers: {}
 
+  packages/component:
+    specifiers: {}
+
   packages/date:
     specifiers: {}
 
@@ -47,13 +56,13 @@ importers:
   packages/http-server:
     specifiers: {}
 
+  packages/i18n:
+    specifiers: {}
+
   packages/is-port-available:
     specifiers: {}
 
   packages/js-utilities:
-    specifiers: {}
-
-  packages/json-database:
     specifiers: {}
 
   packages/mock-data:

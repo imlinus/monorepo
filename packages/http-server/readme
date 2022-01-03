@@ -1,11 +1,16 @@
+█ █ ▀█▀ ▀█▀ █▀█    █▀ █▀█ █▀█ █ █ █▀█ █▀█
+█▀█  █   █  █▀▀ ▀▀ ▄█ █▄▄ █▀▄ ▀▄▀ █▄▄ █▀▄
 
-```js
-import Server from '@imlinus/http-server'
-const server = new Server()
+Simple HTTP-server for REST-APIs and files
+
+```
+import server from '@imlinus/http-server'
 
 server.get('/', (request, response) => {
   response.send('hello')
 })
 
-server.listen(1337)
+server.listen(3000)
 ```
+
+For an example, see apps/fonts

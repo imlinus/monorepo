@@ -1,6 +1,9 @@
+█▀ ▀█▀ ▄▀█ ▀█▀ ▀ █▀    █▀ █▀█ █▀█ █ █ █▀█ █▀█
+▄█  █  █▀█  █  █ █▄ ▀▀ ▄█ █▄▄ █▀▄ ▀▄▀ █▄▄ █▀▄
+
 Simple static content server (HTML, CSS, JS + images)
 
-```js
+```
 import Server from '@imlinus/static-server'
 
 new Server({

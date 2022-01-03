@@ -8,11 +8,10 @@ const fonts = {
 }
 
 server.get('/css/:family', (request, response) => {
-  let root = process.cwd()
-  let filePath = path.join(root, fonts[request.query.family])
-  let content = fs.readFileSync(filePath, 'utf8')
+  const filePath = path.join(process.cwd(), fonts[request.query.family])
+  const stylesheet = fs.readFileSync(filePath, 'utf8')
 
-  response.css(content)
+  response.css(stylesheet)
 })
 
 server.listen(3000)

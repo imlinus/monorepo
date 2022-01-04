@@ -3,24 +3,69 @@
 
 Here you'll find most of my homelab and its utilities
 
+```
+pnpm i -r
+cd apps/whatever
+pnpm start
+```
 
-Apps
+This list is more of a wishlist in todays state :P
+
+Homelab
 ╔═══════════════╤════════════╗
 ║ Type          │ Subdomain  ║
 ╟───────────────┼────────────╢
-║ Personal      │ www        ║
-║ Authenticator │ 2fa        ║
+║ Reverse Proxy │            ║
+║ Portainer     │ portainer  ║
 ║ Dashboard     │ dashboard  ║
-║ Fonts         │ fonts      ║
-║ Thrownote     │ thrownote  ║
 ╚═══════════════╧════════════╝
 
-Third-party
-╔═══════════════╤═══════════════════════════════╗
-║ Type          │ Package      Subdomain   Port ║
-╟───────────────┼───────────────────────────────╢
-║ CI            │ Abstruse     ci          8090 ║
-║ Portainer     │ Portainer    portainer   9000 ║
-║ Docs          │ Etherpad     docs        9010 ║
-╚═══════════════╧═══════════════════════════════╝
+Tools
+╔═══════════════╤════════════╗
+║ Type          │ Subdomain  ║
+╟───────────────┼────────────╢
+║ Authenticator │ 2fa        ║
+║ Search        │ search     ║
+║ Maps          │ maps       ║
+║ Translate     │ translate  ║
+║ PDF editor    │ pdf-edit   ║
+║ Thrownote     │ thrownote  ║
+║ Speedtest     │ speedtest  ║
+╚═══════════════╧════════════╝
 
+Dev
+╔═══════════════╤════════════╗
+║ Type          │ Subdomain  ║
+╟───────────────┼────────────╢
+║ VSCode        │ code       ║
+║ Git           │ git        ║
+║ CI            │ ci         ║
+║ Fonts         │ fonts      ║
+║ CSS           │ css        ║
+║ Personal      │ www        ║
+║ Analytics     │ stats      ║
+║ Snippets      │ snippets   ║
+╚═══════════════╧════════════╝
+
+Office
+╔═══════════════╤════════════╗
+║ Type          │ Subdomain  ║
+╟───────────────┼────────────╢
+║ Files         │ files      ║
+║ Mail          │ mail       ║
+║ Documents     │ docs       ║
+║ Sheets        │ sheets     ║
+╚═══════════════╧════════════╝
+
+Entertainment
+╔═══════════════╤════════════╗
+║ Type          │ Subdomain  ║
+╟───────────────┼────────────╢
+║ Play          │ play       ║
+║ Music         │ music      ║
+║ Books         │ books      ║
+║ YouTube       │ youtube    ║
+║ Reddit        │ reddit     ║
+║ Gaming        │ gaming     ║
+║ Browser       │ browser    ║
+╚═══════════════╧════════════╝

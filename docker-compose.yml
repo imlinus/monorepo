@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+
+  css:
+    container_name: css
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "1301:3000"
+    volumes:
+      - ./apps/css:/css
+    command: 'bash -c "cd css && pnpm start"'
+
+  dashboard:
+    container_name: dashboard
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "1302:3000"
+    volumes:
+      - ./apps/dashboard:/dashboard
+    command: 'bash -c "cd dashboard && pnpm start"'
+
+  fonts:
+    container_name: fonts
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "1303:3000"
+    volumes:
+      - ./apps/fonts:/fonts
+    command: 'bash -c "cd fonts && pnpm start"'
+
+  personal:
+    container_name: personal
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "1304:3000"
+    volumes:
+      - ./apps/personal:/personal
+    command: 'bash -c "cd personal && pnpm start"'
+
+  thrownote:
+    container_name: thrownote
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "1305:3000"
+    volumes:
+      - ./apps/thrownote:/thrownote
+    command: 'bash -c "cd thrownote && pnpm start"'

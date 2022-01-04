@@ -1,11 +1,11 @@
 {
   "private": true,
-  "name": "@imlinus/authenticator",
+  "name": "@imlinus/2fa",
   "type": "module",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "@imlinus/http-server": "*"
+    "@imlinus/static-server": "*"
   }
 }

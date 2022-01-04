@@ -28,21 +28,21 @@ portainer.imlinus.com {
 }
 
 css.imlinus.com {
-  reverse_proxy localhost:1302
+  reverse_proxy localhost:1301
 }
 
 dashboard.imlinus.com {
-  reverse_proxy localhost:1303
+  reverse_proxy localhost:1302
 }
 
 fonts.imlinus.com {
-  reverse_proxy localhost:1304
+  reverse_proxy localhost:1303
 }
 
 imlinus.com {
-  reverse_proxy localhost:1305
+  reverse_proxy localhost:1304
 }
 
 thrownote.imlinus.com {
-  reverse_proxy localhost:1306
+  reverse_proxy localhost:1305
 }

@@ -8,7 +8,7 @@ importers:
     devDependencies:
       '@imlinus/git-hooks': link:packages/git-hooks
 
-  apps/authenticator:
+  apps/2fa:
     specifiers:
       '@imlinus/http-server': '*'
     dependencies:
@@ -24,8 +24,10 @@ importers:
 
   apps/dashboard:
     specifiers:
+      '@imlinus/http-server': '*'
       '@imlinus/site-generator': '*'
     dependencies:
+      '@imlinus/http-server': link:../../packages/http-server
       '@imlinus/site-generator': link:../../packages/site-generator
 
   apps/fonts:
@@ -36,8 +38,10 @@ importers:
 
   apps/personal:
     specifiers:
+      '@imlinus/http-server': '*'
       '@imlinus/site-generator': '*'
     dependencies:
+      '@imlinus/http-server': link:../../packages/http-server
       '@imlinus/site-generator': link:../../packages/site-generator
 
   apps/thrownote:

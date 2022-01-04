@@ -1,12 +1,14 @@
 {
   "name": "@imlinus/dashboard",
   "version": "0.1.0",
-  "main": "main.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
+    "start": "node server.js",
     "build": "site-generator"
   },
   "dependencies": {
+    "@imlinus/static-server": "*",
     "@imlinus/site-generator": "*"
   }
 }

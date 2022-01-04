@@ -1,7 +1,7 @@
 import path from 'path'
 import http from 'http'
 import fs from 'fs'
-import isPortBusy from '@imlinus/is-port-busy'
+// import isPortBusy from '@imlinus/is-port-busy'
 
 const mimes = {
   'js': 'application/x-javascript',
@@ -31,7 +31,7 @@ async function server (options) {
   options.main = options.main || 'index.html'
 
   try {
-    options.port = await isPortBusy(options.port || 1337)
+    // options.port = await isPortBusy(options.port || 1337)
     createServer(options)
   } catch (error) {
     // do nothing

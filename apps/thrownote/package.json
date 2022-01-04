@@ -7,6 +7,6 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@imlinus/http-server": "*"
+    "@imlinus/static-server": "*"
   }
 }

@@ -62,7 +62,7 @@ services:
       context: .
       dockerfile: Dockerfile.node
     ports:
-      - "1300:3000"
+      - "1302:3000"
     volumes:
       - ./:/monorepo
     command: sh -c "cd apps/thrownote && node server.js"

@@ -2,6 +2,8 @@ version: '3'
 
 services:
 
+  # Services
+
   css:
     container_name: css
     restart: unless-stopped
@@ -9,22 +11,10 @@ services:
       context: .
       dockerfile: Dockerfile.node
     ports:
-      - "1301:3000"
+      - "1200:3000"
     volumes:
-      - ./apps/css:/css
-    command: 'bash -c "cd css && pnpm start"'
-
-  dashboard:
-    container_name: dashboard
-    restart: unless-stopped
-    build:
-      context: .
-      dockerfile: Dockerfile.node
-    ports:
-      - "1302:3000"
-    volumes:
-      - ./apps/dashboard:/dashboard
-    command: 'bash -c "cd dashboard && pnpm start"'
+      - ./:/monorepo
+    command: sh -c "cd services/css && node server.js"
 
   fonts:
     container_name: fonts
@@ -33,10 +23,25 @@ services:
       context: .
       dockerfile: Dockerfile.node
     ports:
-      - "1303:3000"
+      - "1201:3000"
     volumes:
-      - ./apps/fonts:/fonts
-    command: 'bash -c "cd fonts && pnpm start"'
+      - ./:/monorepo
+    command: sh -c "cd services/fonts && node server.js"
+
+  
+  # Apps
+
+  dashboard:
+    container_name: dashboard
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "1300:3000"
+    volumes:
+      - ./:/monorepo
+    command: sh -c "cd apps/dashboard && node server.js"
 
   personal:
     container_name: personal
@@ -45,10 +50,10 @@ services:
       context: .
       dockerfile: Dockerfile.node
     ports:
-      - "1304:3000"
+      - "1301:3000"
     volumes:
-      - ./apps/personal:/personal
-    command: 'bash -c "cd personal && pnpm start"'
+      - ./:/monorepo
+    command: sh -c "cd apps/personal && node server.js"
 
   thrownote:
     container_name: thrownote
@@ -57,7 +62,7 @@ services:
       context: .
       dockerfile: Dockerfile.node
     ports:
-      - "1305:3000"
+      - "1300:3000"
     volumes:
-      - ./apps/thrownote:/thrownote
-    command: 'bash -c "cd thrownote && pnpm start"'
+      - ./:/monorepo
+    command: sh -c "cd apps/thrownote && node server.js"

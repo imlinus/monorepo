@@ -1,14 +1,3 @@
 {
-  "name": "@imlinus/personal",
-  "version": "0.1.0",
-  "main": "server.js",
-  "type": "module",
-  "scripts": {
-    "start": "node server.js",
-    "build": "site-generator"
-  },
-  "dependencies": {
-    "@imlinus/static-server": "*",
-    "@imlinus/site-generator": "*"
-  }
+  "type": "module"
 }

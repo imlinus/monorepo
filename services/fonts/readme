@@ -1,0 +1,19 @@
+█▀▀ █▀█ █▀▄ ▀█▀ █▀
+█▀  █▄█ █ █  █  ▄█
+
+My simple google-fonts alternative
+
+╔═════════╤════════════════╗
+║ Action  │ Command        ║
+╟─────────┼────────────────╢
+║ start   │ node server.js ║
+╚═════════╧════════════════╝
+
+╔════════════════╤════════════════════════════╗
+║ Type           │ URL                        ║
+╟────────────────┼────────────────────────────╢
+║ JetBrains Mono │ /css?family=JetBrains+Mono ║
+║ Comic Mono     │ /css?family=Comic+Mono     ║
+╚════════════════╧════════════════════════════╝
+
+https://fonts.imlinus.com

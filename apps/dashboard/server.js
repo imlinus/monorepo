@@ -1,7 +1,7 @@
-import server from '@imlinus/static-server'
+import server from './../../libraries/static-server/source/index.js'
 
 server({
-  src: "dist",
+  src: 'build',
   port: 3000,
   main: 'index.html'
 })

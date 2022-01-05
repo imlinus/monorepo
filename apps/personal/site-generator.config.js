@@ -1,7 +1,7 @@
-import SiteGenerator from '@imlinus/site-generator'
+import SiteGenerator from './../../tools/site-generator/source/index.js'
 
 new SiteGenerator({
-	root: 'src',
+	root: 'source',
 	style: 'css',
 	pages: 'pages',
 	posts: 'posts',

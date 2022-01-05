@@ -1,0 +1,30 @@
+```
+import { i18n } from ''
+
+i18n.addLocale('en', {
+  foo: 'the bar',
+  plurals: {
+    messages: ['message', 'messages'],
+    man: ['man', 'men'],
+    woman: ['woman', 'women']
+  },
+  email: {
+    info: 'Hi {name}. You have {number} {@plurals.messages(messages)}.'
+  }
+})
+
+i18n.addLocale('fr', {
+  foo: 'le bar'
+})
+
+i18n.setLocale('fr')
+i18n('foo') // 'le bar'
+
+i18n.setLocale('en')
+i18n('foo') // 'the bar'
+
+i18n('email.info', { name: 'John', messages: 0 }) // Hi John. You have 0 messages.
+i18n('email.info', { name: 'John', messages: 1 }) // Hi John. You have 1 message.
+i18n('email.info', { name: 'John', messages: 2 }) // Hi John. You have 2 messages.
+```
+

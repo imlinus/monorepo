@@ -1,0 +1,24 @@
+# Services
+
+css.imlinus.com {
+  reverse_proxy localhost:1200
+}
+
+fonts.imlinus.com {
+  reverse_proxy localhost:1201
+}
+
+
+# Webapps
+
+dashboard.imlinus.com {
+  reverse_proxy localhost:1300
+}
+
+imlinus.com {
+  reverse_proxy localhost:1301
+}
+
+thrownote.imlinus.com {
+  reverse_proxy localhost:1302
+}

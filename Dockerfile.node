@@ -1,22 +1,7 @@
 FROM node:alpine AS pnpm
-RUN npm --global install pnpm
+WORKDIR /monorepo
 
-WORKDIR /root/monorepo
 COPY ./ ./
 
-FROM pnpm AS base
-COPY ./pnpm-lock.yaml .npmrc ./
-RUN pnpm fetch --prod
-
-FROM base AS dev
-RUN pnpm fetch
-COPY ./ ./
-RUN pnpm install --offline
-
-## This is ugly, but I'm having insane problems with symlinked crap
-## And yeah.. I don't wanna spend another week on f*ckin docker
-WORKDIR /root/monorepo/apps
-
-# FROM dev
-# WORKDIR /root/app
-# COPY --from=dev /root/monorepo/apps/$name ./
+# EXPOSE 3000
+# CMD [ "node", "server.js" ]

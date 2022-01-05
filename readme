@@ -3,12 +3,38 @@
 
 Here you'll find most of my homelab and its utilities
 
-```
-pnpm i -r
-cd apps/whatever
-pnpm start
-```
+If you notice something weird, thats because there's no package.json,
+since one of my weird goals is to eliminate all the node_modules bloat
 
+There will never be a express server or apollo packages in this repo, 
+instead you'll find many small "suckless" alternatives to the giants
+
+
+Structure right now
+
+monorepo
+│ 
+├── apps
+│   ├── dashboard
+│   ├── personal
+│   └── thrownote
+│
+├── services
+│   ├── css
+│   └── fonts
+│
+├── tools
+│   ├── style-packer
+│   ├── site-generator 
+│   └── git-hooks
+│
+└── libraries
+    ├── color
+    ├── http-server
+    ├── static-server
+    └── stylesheet
+
+---
 This list is more of a wishlist in todays state :P
 
 Homelab

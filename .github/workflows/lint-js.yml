@@ -1,0 +1,14 @@
+name: StandardJs
+
+on: [push, pull_request]
+
+jobs:
+  standardjs:
+    name: StandardJs
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: StandardJs
+      uses: docker://jopereyral/standardjs-action
+      with:
+        args: --fix

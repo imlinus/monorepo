@@ -15,4 +15,4 @@ new StylePacker({
 })
 ```
 
-See packages/stylesheet for an example
+See libraries/stylesheet for an example
